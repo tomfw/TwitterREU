@@ -27,6 +27,7 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
     timeFormat = "%Y-%m-%dT%H:%M:%S.%fZ"
     numTweets = 0
 
+
     with open(mypath) as f1:
         for line in f1:
             if (sample_amount and random.random() < sample_amount) or not sample_amount:
@@ -51,7 +52,7 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                 for ui in tweetObj['twitter_entities']['user_mentions']:
                     id1 = ui['id']
 
-                    if not id1:
+                    if not id1 or id1 == id2:
                         continue
 
                     if not id1 in G:
@@ -153,6 +154,8 @@ def dataframe_from_graph(graph, pairs=True, sampling=None):
     nbrs = []
     spl = []
     count = 0
+    degree = nx.degree(graph)
+
     if pairs:
         iter_set = all_pairs(graph)
     else:
@@ -160,15 +163,21 @@ def dataframe_from_graph(graph, pairs=True, sampling=None):
 
     for n1, n2 in iter_set:
         if random.random() < sampling:
-            count += 1
-            u.append(n1)
-            v.append(n2)
-            has_links.append(graph.has_edge(n1, n2))
-            jac_co.append(get_jac(graph, n1, n2))
-            adam.append(get_adam(graph, n1, n2))
-            att.append(get_att(graph, n1, n2))
-            nbrs.append(get_nbrs(graph, n1, n2))
-            spl.append(get_sp(graph, n1, n2))
+            deg1 = degree[n1]
+            deg2 = degree[n2]
+            attach = deg1 * deg2
+            if attach > 5000:
+                if count % 50000 == 0:
+                    print("%d in set so far..." % count)
+                count += 1
+                u.append(n1)
+                v.append(n2)
+                has_links.append(graph.has_edge(n1, n2))
+                jac_co.append(get_jac(graph, n1, n2))
+                adam.append(get_adam(graph, n1, n2))
+                att.append(attach)
+                nbrs.append(get_nbrs(graph, n1, n2))
+                spl.append(get_sp(graph, n1, n2))
 
     df = pd.DataFrame()
     df['u'] = u
