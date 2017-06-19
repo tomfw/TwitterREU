@@ -61,15 +61,13 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                         G.node[id1]['n_mentions'] += 1
 
                     if not G.has_edge(id1, id2):
-                        G.add_edge(id1, id2, posted=currentTime, n_links=1)
+                        G.add_edge(id1, id2, posted=[currentTime], n_links=1)
                     else:
-                        oldTime = G.edge[id1][id2]['posted']
-                        if currentTime > oldTime:
-                            newTime = currentTime
-                        else:
-                            newTime = oldTime
-
-                        G.edge[id1][id2]['posted'] = newTime
+                        timeStamps = G.edge[id1][id2]['posted']
+                        i = 0
+                        while i < len(timeStamps) and timeStamps[i] > currentTime:
+                            i += 1
+                        G.edge[id1][id2]['posted'].insert(i, currentTime)
                         G.edge[id1][id2]['n_links'] += 1
                 try:
                     if (not tweetObj['body'].lower().startswith("rt")):
@@ -141,6 +139,12 @@ def get_nbrs(graph, u, v):
     return nbrs
 
 
+def remove_degree_zero_nodes(graph):
+    for node in graph.nodes():
+        if graph.degree(node) == 0:
+            graph.remove_node(node)
+
+
 def dataframe_from_graph(graph, pairs=True, sampling=None):
     if not sampling:
         sampling = 2
@@ -163,21 +167,21 @@ def dataframe_from_graph(graph, pairs=True, sampling=None):
 
     for n1, n2 in iter_set:
         if random.random() < sampling:
-            deg1 = degree[n1]
-            deg2 = degree[n2]
-            attach = deg1 * deg2
-            if attach > 5000:
-                if count % 50000 == 0:
-                    print("%d in set so far..." % count)
-                count += 1
-                u.append(n1)
-                v.append(n2)
-                has_links.append(graph.has_edge(n1, n2))
-                jac_co.append(get_jac(graph, n1, n2))
-                adam.append(get_adam(graph, n1, n2))
-                att.append(attach)
-                nbrs.append(get_nbrs(graph, n1, n2))
-                spl.append(get_sp(graph, n1, n2))
+            #deg1 = degree[n1]
+            #deg2 = degree[n2]
+            #attach = deg1 * deg2
+           # if attach > 1000:
+            if count % 150000 == 0:
+                print("%d in set so far..." % count)
+            count += 1
+            u.append(n1)
+            v.append(n2)
+            has_links.append(graph.has_edge(n1, n2))
+            jac_co.append(get_jac(graph, n1, n2))
+            adam.append(get_adam(graph, n1, n2))
+            att.append(get_att(graph, n1, n2))
+            nbrs.append(get_nbrs(graph, n1, n2))
+            spl.append(get_sp(graph, n1, n2))
 
     df = pd.DataFrame()
     df['u'] = u
