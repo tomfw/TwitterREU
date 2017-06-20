@@ -25,10 +25,10 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
     tweetList[:] = []
     timeList[:] = []
     userList[:] = []
+    userNameDict = {}
 
     timeFormat = "%Y-%m-%dT%H:%M:%S.%fZ"
     numTweets = 0
-
 
     with open(mypath) as f1:
         for line in f1:
@@ -42,23 +42,34 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                 tweetObj = json.loads(line)
                 currentTime = datetime.datetime.strptime(tweetObj['postedTime'], timeFormat)
                 id2 = int(re.findall('^.*:([0-9]+)$', str(tweetObj['actor']['id']))[0])
+                uName = tweetObj['actor']['preferredUsername']
+
+                if uName not in userNameDict:
+                    userNameDict[uName] = id2
+                else:
+                    id2 = userNameDict[uName]
 
                 if not id2:
                     continue
 
-                if not id2 in G:
-                    G.add_node(id2, n_tweets=1, n_mentions=0)
+                if id2 not in G:
+                    G.add_node(id2, n_tweets=1, n_mentions=0, u_name=uName)
                 else:
                     G.node[id2]['n_tweets'] += 1
 
                 for ui in tweetObj['twitter_entities']['user_mentions']:
                     id1 = ui['id']
-
+                    name2 = ui['screen_name']
                     if not id1 or id1 == id2:
                         continue
 
-                    if not id1 in G:
-                        G.add_node(id1, n_tweets=0, n_mentions=1)
+                    if name2 not in userNameDict:
+                        userNameDict[name2] = id1
+                    else:
+                        id1 = userNameDict[name2]
+
+                    if id1 not in G:
+                        G.add_node(id1, n_tweets=0, n_mentions=1, u_name=name2)
                     else:
                         G.node[id1]['n_mentions'] += 1
 
@@ -171,21 +182,21 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None):
 
     for n1, n2 in iter_set:
         if random.random() < sampling or (label_graph and label_graph.has_edge(n1, n2)):
-            # deg1 = degree[n1]
-            # deg2 = degree[n2]
-            # attach = deg1 * deg2
-            # if attach > 1000:
-            if count % 150000 == 0:
-                print("%d in set so far..." % count)
-            count += 1
-            u.append(n1)
-            v.append(n2)
-            # has_links.append(graph.has_edge(n1, n2))
-            jac_co.append(get_jac(graph, n1, n2))
-            adam.append(get_adam(graph, n1, n2))
-            att.append(get_att(graph, n1, n2))
-            nbrs.append(get_nbrs(graph, n1, n2))
-            spl.append(get_sp(graph, n1, n2))
+            deg1 = degree[n1]
+            deg2 = degree[n2]
+            if deg1 > 20 or deg2 > 20:
+                if count % 150000 == 0:
+                    print("%d in set so far..." % count)
+                count += 1
+                u.append(n1)
+                v.append(n2)
+                # has_links.append(graph.has_edge(n1, n2))
+                jac_co.append(get_jac(graph, n1, n2))
+                adam.append(get_adam(graph, n1, n2))
+                # att.append(get_att(graph, n1, n2))
+                att.append(deg1 * deg2)
+                nbrs.append(get_nbrs(graph, n1, n2))
+                spl.append(get_sp(graph, n1, n2))
 
     df = pd.DataFrame()
     df['u'] = u
