@@ -6,6 +6,7 @@ import re
 import datetime
 from itertools import chain
 import pandas as pd
+from collections import defaultdict
 
 filenames = ['SAfrica-community-relevant-restricted.json',
              'Kenya-community-relevant-restricted.json',
@@ -14,6 +15,7 @@ filenames = ['SAfrica-community-relevant-restricted.json',
 tweetList = []
 timeList = []
 userList = []
+ht_counts = defaultdict(int)
 
 
 def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
@@ -69,6 +71,8 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                             i += 1
                         G.edge[id1][id2]['posted'].insert(i, currentTime)
                         G.edge[id1][id2]['n_links'] += 1
+                for ht in tweetObj['twitter_entities']['hashtags']:
+                    ht_counts[ht['text'].lower()] += 1
                 try:
                     if (not tweetObj['body'].lower().startswith("rt")):
                         # Increment tweet count
@@ -145,7 +149,7 @@ def remove_degree_zero_nodes(graph):
             graph.remove_node(node)
 
 
-def dataframe_from_graph(graph, pairs=True, sampling=None):
+def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None):
     if not sampling:
         sampling = 2
 
@@ -166,17 +170,17 @@ def dataframe_from_graph(graph, pairs=True, sampling=None):
         iter_set = nx.non_edges(graph)
 
     for n1, n2 in iter_set:
-        if random.random() < sampling:
-            #deg1 = degree[n1]
-            #deg2 = degree[n2]
-            #attach = deg1 * deg2
-           # if attach > 1000:
+        if random.random() < sampling or (label_graph and label_graph.has_edge(n1, n2)):
+            # deg1 = degree[n1]
+            # deg2 = degree[n2]
+            # attach = deg1 * deg2
+            # if attach > 1000:
             if count % 150000 == 0:
                 print("%d in set so far..." % count)
             count += 1
             u.append(n1)
             v.append(n2)
-            has_links.append(graph.has_edge(n1, n2))
+            # has_links.append(graph.has_edge(n1, n2))
             jac_co.append(get_jac(graph, n1, n2))
             adam.append(get_adam(graph, n1, n2))
             att.append(get_att(graph, n1, n2))
@@ -186,7 +190,7 @@ def dataframe_from_graph(graph, pairs=True, sampling=None):
     df = pd.DataFrame()
     df['u'] = u
     df['v'] = v
-    df['link'] = has_links
+    # df['link'] = has_links
     df['jac'] = jac_co
     df['adam'] = adam
     df['nbrs'] = nbrs
