@@ -84,12 +84,20 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                         G.edge[id1][id2]['n_links'] += 1
                 for ht in tweetObj['twitter_entities']['hashtags']:
                     #ht_counts[ht['text'].lower()] += 1
-                    if ht['text'].lower() not in G:
-                        G.add_node(ht['text'].lower(), n_uses=1, type="hashtag")
+                    text = ht['text'].lower()
+                    if text not in G:
+                        G.add_node(text, n_uses=1, type="hashtag")
                     else:
-                        G.node[ht['text'].lower()]['n_uses'] += 1
+                        G.node[text]['n_uses'] += 1
 
-                    G.add_edge(id2, ht['text'].lower())
+                    if not G.has_edge(id2, text):
+                        G.add_edge(id2, text, posted=[currentTime])
+                    else:
+                        timeStamps = G.edge[id2][text]['posted']
+                        i = 0
+                        while i < len(timeStamps) and timeStamps[i] > currentTime:
+                            i += 1
+                        G.edge[id2][text]['posted'].insert(i, currentTime)
                 try:
                     if (not tweetObj['body'].lower().startswith("rt")):
                         # Increment tweet count
