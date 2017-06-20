@@ -53,7 +53,7 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                     continue
 
                 if id2 not in G:
-                    G.add_node(id2, n_tweets=1, n_mentions=0, u_name=uName)
+                    G.add_node(id2, n_tweets=1, n_mentions=0, u_name=uName, type="user")
                 else:
                     G.node[id2]['n_tweets'] += 1
 
@@ -69,7 +69,7 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                         id1 = userNameDict[name2]
 
                     if id1 not in G:
-                        G.add_node(id1, n_tweets=0, n_mentions=1, u_name=name2)
+                        G.add_node(id1, n_tweets=0, n_mentions=1, u_name=name2, type="user")
                     else:
                         G.node[id1]['n_mentions'] += 1
 
@@ -83,7 +83,13 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                         G.edge[id1][id2]['posted'].insert(i, currentTime)
                         G.edge[id1][id2]['n_links'] += 1
                 for ht in tweetObj['twitter_entities']['hashtags']:
-                    ht_counts[ht['text'].lower()] += 1
+                    #ht_counts[ht['text'].lower()] += 1
+                    if ht['text'].lower() not in G:
+                        G.add_node(ht['text'].lower(), n_uses=1, type="hashtag")
+                    else:
+                        G.node[ht['text'].lower()]['n_uses'] += 1
+
+                    G.add_edge(id2, ht['text'].lower())
                 try:
                     if (not tweetObj['body'].lower().startswith("rt")):
                         # Increment tweet count
@@ -184,7 +190,7 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None):
         if random.random() < sampling or (label_graph and label_graph.has_edge(n1, n2)):
             deg1 = degree[n1]
             deg2 = degree[n2]
-            if deg1 > 20 or deg2 > 20:
+            if (deg1 > 20 or deg2 > 20) and (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag'):
                 if count % 150000 == 0:
                     print("%d in set so far..." % count)
                 count += 1
