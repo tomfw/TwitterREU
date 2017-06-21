@@ -85,6 +85,7 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                 for ht in tweetObj['twitter_entities']['hashtags']:
                     #ht_counts[ht['text'].lower()] += 1
                     text = ht['text'].lower()
+                    ht_counts[text] += 1
                     if text not in G:
                         G.add_node(text, n_uses=1, type="hashtag")
                     else:
@@ -174,7 +175,7 @@ def remove_degree_zero_nodes(graph):
             graph.remove_node(node)
 
 
-def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None):
+def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, allow_hashtags=False, min_degree=0):
     if not sampling:
         sampling = 2
 
@@ -189,16 +190,19 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None):
     count = 0
     degree = nx.degree(graph)
 
-    if pairs:
+    if type(pairs) is bool and pairs:
         iter_set = all_pairs(graph)
-    else:
+    elif type(pairs) is bool and not pairs:
         iter_set = nx.non_edges(graph)
+    else:
+        iter_set = pairs
+        print("Using the pairs you provided...")
 
     for n1, n2 in iter_set:
         if random.random() < sampling or (label_graph and label_graph.has_edge(n1, n2)):
             deg1 = degree[n1]
             deg2 = degree[n2]
-            if (deg1 > 20 or deg2 > 20) and (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag'):
+            if (deg1 > min_degree or deg2 > min_degree) and (allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag')):
                 if count % 150000 == 0:
                     print("%d in set so far..." % count)
                 count += 1
