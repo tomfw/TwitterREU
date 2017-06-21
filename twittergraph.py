@@ -15,10 +15,18 @@ filenames = ['SAfrica-community-relevant-restricted.json',
 tweetList = []
 timeList = []
 userList = []
+rt_count = 0
 ht_counts = defaultdict(int)
 
 
 def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
+    """
+    :param directory: Directory where data files are
+    :param country: 0 - SA, 1 - Kenya, 2 - Nigera (do not rename files!)
+    :param sample_amount: (optional) NONE - load whole graph, if specified sample by sample_amount
+    :param n_tweets: (optional, ignored if sample_amount specified) load only n_tweets tweets
+    :return: networkx graph object
+    """
     mypath = directory + filenames[country]
     G = nx.Graph()
 
@@ -112,6 +120,36 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
     return G
 
 
+def candidate_list(graph):
+    """
+    Don't use this, supposed to generate list of "edge candidates"
+    Doesn't work
+    """
+    deg = nx.degree(graph)
+    n_tweets = defaultdict(int)
+    n_mentions = defaultdict(int)
+    pair_dict = defaultdict(bool)
+    pairs = []
+    pair_count = 0
+    for u in graph.nodes_iter():
+        if graph.node[u]['type'] == 'user':
+            n_tweets[u] = graph.node[u]['n_tweets']
+            n_mentions[u] = graph.node[u]['n_mentions']
+        else:
+            continue
+        if n_tweets[u] > 15 or n_mentions[u] > 15:
+            for v in graph.nodes_iter():
+                if graph.node[v]['type'] == 'hashtag':
+                    continue
+                if deg[v] > 0 or n_tweets[v] > 0 or n_mentions[v] > 0:
+                    (u, v) = sorted((u, v))
+                    if not pair_dict[(u,v)]:
+                        pair_dict[(u, v)] = True
+                        pairs.append((u, v))
+                        pair_count += 1
+    return pairs
+
+
 def all_pairs(graph):
     return chain(graph.edges(), nx.non_edges(graph))
 
@@ -176,6 +214,16 @@ def remove_degree_zero_nodes(graph):
 
 
 def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, allow_hashtags=False, min_degree=0):
+    """
+    :param graph: Graph to generate the dataframe from
+    :param pairs: (Optional) TRUE-Use all pairs, False-only use non-edges, or a list of tuples of pairs to use
+    :param sampling: (optional) NONE - use whole graph, otherwise amount to sample
+    :param label_graph: (optional) NONE - don't force any edges in, if specified all pairs with edge in label_graph will
+                        be included
+    :param allow_hashtags: FALSE - only allow user nodes
+    :param min_degree: one node must have degree at least min_degree to be included in dataframe
+    :return: pandas dataframe with pairs of nodes and their various metrics
+    """
     if not sampling:
         sampling = 2
 
@@ -228,6 +276,68 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
     print("%d pairs and %d edges in dataframe" % (count, np.count_nonzero(has_links)))
 
     return df
+
+
+def dataframe_from_graph2(graph, pairs=True, sampling=None, label_graph=None, allow_hashtags=False, min_degree=0):
+    """
+    This is for fun.
+    Don't use this method
+    """
+    if not sampling:
+        sampling = 2
+
+    u = []
+    v = []
+    has_links = []
+    jac_co = []
+    adam = []
+    att = []
+    nbrs = []
+    spl = []
+    count = 0
+    degree = nx.degree(graph)
+
+    if type(pairs) is bool and pairs:
+        iter_set = all_pairs(graph)
+    elif type(pairs) is bool and not pairs:
+        iter_set = nx.non_edges(graph)
+    else:
+        iter_set = pairs
+        print("Using the pairs you provided...")
+
+    for n1, n2 in iter_set:
+        if random.random() < sampling:  # or (label_graph and label_graph.has_edge(n1, n2)):
+            if allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag'):
+                if count % 150000 == 0:
+                    print("%d in set so far..." % count)
+                shortest = get_sp(graph, n1, n2)
+                count += 1
+                if shortest < 10:
+                    deg1 = degree[n1]
+                    deg2 = degree[n2]
+                    u.append(n1)
+                    v.append(n2)
+                    # has_links.append(graph.has_edge(n1, n2))
+                    jac_co.append(get_jac(graph, n1, n2))
+                    adam.append(get_adam(graph, n1, n2))
+                    # att.append(get_att(graph, n1, n2))
+                    att.append(deg1 * deg2)
+                    nbrs.append(get_nbrs(graph, n1, n2))
+                    spl.append(shortest)
+
+    df = pd.DataFrame()
+    df['u'] = u
+    df['v'] = v
+    # df['link'] = has_links
+    df['jac'] = jac_co
+    df['adam'] = adam
+    df['nbrs'] = nbrs
+    df['att'] = att
+    df['spl'] = spl
+    print("%d pairs and %d edges in dataframe" % (count, np.count_nonzero(has_links)))
+
+    return df
+
 
 
 def labels_for_dataframe(df, graph):
