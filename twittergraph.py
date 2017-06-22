@@ -17,9 +17,10 @@ timeList = []
 userList = []
 rt_count = 0
 ht_counts = defaultdict(int)
+tweets = {}
 
 
-def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
+def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0, hashtags=True):
     """
     :param directory: Directory where data files are
     :param country: 0 - SA, 1 - Kenya, 2 - Nigera (do not rename files!)
@@ -41,7 +42,6 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
     with open(mypath) as f1:
         for line in f1:
             if (sample_amount and random.random() < sample_amount) or not sample_amount:
-                numTweets += 1
 
                 if not sample_amount and n_tweets and numTweets > n_tweets:
                     print("Loaded %d tweets" % (numTweets - 1))
@@ -51,6 +51,8 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                 currentTime = datetime.datetime.strptime(tweetObj['postedTime'], timeFormat)
                 id2 = int(re.findall('^.*:([0-9]+)$', str(tweetObj['actor']['id']))[0])
                 uName = tweetObj['actor']['preferredUsername']
+                tweets[numTweets] = tweetObj['body']
+                numTweets += 1
 
                 if uName not in userNameDict:
                     userNameDict[uName] = id2
@@ -82,31 +84,34 @@ def LoadTwitterGraph(directory, country, sample_amount=None, n_tweets=0):
                         G.node[id1]['n_mentions'] += 1
 
                     if not G.has_edge(id1, id2):
-                        G.add_edge(id1, id2, posted=[currentTime], n_links=1)
+                        G.add_edge(id1, id2, posted=[currentTime], n_links=1, tweets=[numTweets])
                     else:
                         timeStamps = G.edge[id1][id2]['posted']
                         i = 0
                         while i < len(timeStamps) and timeStamps[i] > currentTime:
                             i += 1
                         G.edge[id1][id2]['posted'].insert(i, currentTime)
+                        G.edge[id1][id2]['tweets'].insert(i, numTweets)
                         G.edge[id1][id2]['n_links'] += 1
-                for ht in tweetObj['twitter_entities']['hashtags']:
-                    #ht_counts[ht['text'].lower()] += 1
-                    text = ht['text'].lower()
-                    ht_counts[text] += 1
-                    if text not in G:
-                        G.add_node(text, n_uses=1, type="hashtag")
-                    else:
-                        G.node[text]['n_uses'] += 1
+                if hashtags:
+                    for ht in tweetObj['twitter_entities']['hashtags']:
+                        #ht_counts[ht['text'].lower()] += 1
+                        text = ht['text'].lower()
+                        ht_counts[text] += 1
+                        if text not in G:
+                            G.add_node(text, n_uses=1, type="hashtag")
+                        else:
+                            G.node[text]['n_uses'] += 1
 
-                    if not G.has_edge(id2, text):
-                        G.add_edge(id2, text, posted=[currentTime])
-                    else:
-                        timeStamps = G.edge[id2][text]['posted']
-                        i = 0
-                        while i < len(timeStamps) and timeStamps[i] > currentTime:
-                            i += 1
-                        G.edge[id2][text]['posted'].insert(i, currentTime)
+                        if not G.has_edge(id2, text):
+                            G.add_edge(id2, text, posted=[currentTime], tweets=[numTweets])
+                        else:
+                            timeStamps = G.edge[id2][text]['posted']
+                            i = 0
+                            while i < len(timeStamps) and timeStamps[i] > currentTime:
+                                i += 1
+                            G.edge[id2][text]['posted'].insert(i, currentTime)
+                            G.edge[id2][text]['tweets'].insert(i, numTweets)
                 try:
                     if (not tweetObj['body'].lower().startswith("rt")):
                         # Increment tweet count
