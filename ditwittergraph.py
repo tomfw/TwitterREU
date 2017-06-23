@@ -7,6 +7,7 @@ import datetime
 from itertools import chain
 import pandas as pd
 from collections import defaultdict
+import math
 
 filenames = ['SAfrica-community-relevant-restricted.json',
              'Kenya-community-relevant-restricted.json',
@@ -176,26 +177,6 @@ def get_sp(graph, u, v):
 
     return distance
 
-
-def get_jac(graph, u, v):
-    jac = 0
-    j = nx.jaccard_coefficient(graph, [(u, v)])
-    for x, y, p in j:
-        jac = p
-    return jac
-
-
-def get_adam(graph, u, v):
-    adam = 0
-    j = nx.adamic_adar_index(graph, [(u, v)])
-    try:
-        for x, y, p in j:
-            adam = p
-    except:
-        adam = 0
-    return adam
-
-
 def get_att(graph, u, v):
     att = 0
     j = nx.preferential_attachment(graph, [(u, v)])
@@ -204,13 +185,32 @@ def get_att(graph, u, v):
     return att
 
 
-def get_nbrs(graph, u, v):
-    nbrs = 0
-    for nbr in nx.common_neighbors(graph, u, v):
-        nbrs += 1
+def common_nbrs(graph, u, v):
+    u_adj = graph.neighbors(u)
+    v_adj = graph.neighbors(v)
+    nbrs = []
+    for u in u_adj:
+        if u in v_adj:
+            nbrs.append(u)
 
-    return nbrs
+    return nbrs, u_adj, v_adj
 
+zero_count = 0
+
+def get_unsupported(graph, u, v):
+    jac = adam = n_nbrs = 0
+    nbrs, u_adj, v_adj = common_nbrs(graph, u, v)
+    n_nbrs = len(nbrs)
+    union_magn = len(u_adj) + len(v_adj)
+    if union_magn:
+        jac = float(n_nbrs) / float(union_magn)
+
+    for nbr in nbrs:
+        deg = graph.degree(nbr)
+        if deg > 1:
+            adam += 1/math.log(deg)
+
+    return jac, adam, n_nbrs
 
 def remove_degree_zero_nodes(graph):
     for node in graph.nodes():
@@ -218,7 +218,7 @@ def remove_degree_zero_nodes(graph):
             graph.remove_node(node)
 
 
-def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, allow_hashtags=False, min_degree=0):
+def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_degree=0):
     """
     :param graph: Graph to generate the dataframe from
     :param pairs: (Optional) TRUE-Use all pairs, False-only use non-edges, or a list of tuples of pairs to use
@@ -240,7 +240,9 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
     att = []
     nbrs = []
     spl = []
+    katzes = []
     count = 0
+    labels = []
     degree = nx.degree(graph)
 
     if type(pairs) is bool and pairs:
@@ -251,8 +253,11 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
         iter_set = pairs
         print("Using the pairs you provided...")
 
+    print("Precomputing katzes....")
+    katz = nx.katz_centrality(graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
+
     for n1, n2 in iter_set:
-        if random.random() < sampling or (label_graph and label_graph.has_edge(n1, n2)):
+        if random.random() < sampling or (cheat and label_graph and label_graph.has_edge(n1, n2)):
             deg1 = degree[n1]
             deg2 = degree[n2]
             if (deg1 > min_degree or deg2 > min_degree) and (allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag')):
@@ -261,26 +266,28 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
                 count += 1
                 u.append(n1)
                 v.append(n2)
-                # has_links.append(graph.has_edge(n1, n2))
-                jac_co.append(get_jac(graph, n1, n2))
-                adam.append(get_adam(graph, n1, n2))
-                # att.append(get_att(graph, n1, n2))
+                (jaccard, adamic, n_nbrs ) = get_unsupported(graph, n1, n2)
+                jac_co.append(jaccard)
+                adam.append(adamic)
+                nbrs.append(n_nbrs)
                 att.append(deg1 * deg2)
-                nbrs.append(get_nbrs(graph, n1, n2))
                 spl.append(get_sp(graph, n1, n2))
+                katzes.append(np.mean((katz[n1], katz[n2])))
+                labels.append(label_graph.has_edge(n1, n2))
 
     df = pd.DataFrame()
     df['u'] = u
     df['v'] = v
-    # df['link'] = has_links
     df['jac'] = jac_co
     df['adam'] = adam
     df['nbrs'] = nbrs
     df['att'] = att
     df['spl'] = spl
+    df['katz'] = katzes
+
     print("%d pairs and %d edges in dataframe" % (count, np.count_nonzero(has_links)))
 
-    return df
+    return df, labels
 
 
 def dataframe_from_graph2(graph, pairs=True, sampling=None, label_graph=None, allow_hashtags=False, min_degree=0):
