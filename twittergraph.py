@@ -240,6 +240,7 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
     att = []
     nbrs = []
     spl = []
+    katzes = []
     count = 0
     degree = nx.degree(graph)
 
@@ -250,6 +251,9 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
     else:
         iter_set = pairs
         print("Using the pairs you provided...")
+
+    print("Precomputing katzes....")
+    katz = nx.katz_centrality(graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
 
     for n1, n2 in iter_set:
         if random.random() < sampling or (label_graph and label_graph.has_edge(n1, n2)):
@@ -268,7 +272,7 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
                 att.append(deg1 * deg2)
                 nbrs.append(get_nbrs(graph, n1, n2))
                 spl.append(get_sp(graph, n1, n2))
-
+                katzes.append(np.mean((katz[n1], katz[n2])))
     df = pd.DataFrame()
     df['u'] = u
     df['v'] = v
@@ -278,6 +282,7 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, all
     df['nbrs'] = nbrs
     df['att'] = att
     df['spl'] = spl
+    df['katz'] = katzes
     print("%d pairs and %d edges in dataframe" % (count, np.count_nonzero(has_links)))
 
     return df
