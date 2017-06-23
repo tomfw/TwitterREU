@@ -198,7 +198,7 @@ def common_nbrs(graph, u, v):
 zero_count = 0
 
 def get_unsupported(graph, u, v):
-    jac = adam = n_nbrs = 0
+    jac = adam = n_nbrs = attachment = 0
     nbrs, u_adj, v_adj = common_nbrs(graph, u, v)
     n_nbrs = len(nbrs)
     union_magn = len(u_adj) + len(v_adj)
@@ -210,7 +210,9 @@ def get_unsupported(graph, u, v):
         if deg > 1:
             adam += 1/math.log(deg)
 
-    return jac, adam, n_nbrs
+    attachment = len(u_adj) * len(v_adj)
+    return jac, adam, n_nbrs, attachment
+
 
 def remove_degree_zero_nodes(graph):
     for node in graph.nodes():
@@ -218,7 +220,7 @@ def remove_degree_zero_nodes(graph):
             graph.remove_node(node)
 
 
-def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_degree=0):
+def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_katz=0):
     """
     :param graph: Graph to generate the dataframe from
     :param pairs: (Optional) TRUE-Use all pairs, False-only use non-edges, or a list of tuples of pairs to use
@@ -243,7 +245,7 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, che
     katzes = []
     count = 0
     labels = []
-    degree = nx.degree(graph)
+    # degree = nx.degree(graph)
 
     if type(pairs) is bool and pairs:
         iter_set = all_pairs(graph)
@@ -255,22 +257,24 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, che
 
     print("Precomputing katzes....")
     katz = nx.katz_centrality(graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
-
+    elim = 0
     for n1, n2 in iter_set:
         if random.random() < sampling or (cheat and label_graph and label_graph.has_edge(n1, n2)):
-            deg1 = degree[n1]
-            deg2 = degree[n2]
-            if (deg1 > min_degree or deg2 > min_degree) and (allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag')):
-                if count % 150000 == 0:
-                    print("%d in set so far..." % count)
+            if allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag'):
                 count += 1
+                if count % 1000000 == 0:
+                    print("%d checked... %d eliminated" % (count, elim))
+                k_s = np.mean((katz[n1], katz[n2]))
+                if k_s < min_katz:
+                    elim += 1
+                    continue
                 u.append(n1)
                 v.append(n2)
-                (jaccard, adamic, n_nbrs ) = get_unsupported(graph, n1, n2)
+                (jaccard, adamic, n_nbrs, attachment) = get_unsupported(graph, n1, n2)
                 jac_co.append(jaccard)
                 adam.append(adamic)
                 nbrs.append(n_nbrs)
-                att.append(deg1 * deg2)
+                att.append(attachment)
                 spl.append(get_sp(graph, n1, n2))
                 katzes.append(np.mean((katz[n1], katz[n2])))
                 labels.append(label_graph.has_edge(n1, n2))
@@ -285,6 +289,7 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, che
     df['spl'] = spl
     df['katz'] = katzes
 
+    print("%d pairs eliminated.... " % (elim))
     print("%d pairs and %d edges in dataframe" % (count, np.count_nonzero(has_links)))
 
     return df, labels
