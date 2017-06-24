@@ -172,6 +172,9 @@ def get_sp(graph, u, v):
     except:
         distance = 1000000
 
+    if distance == 0:       # I check to prevent a user from mentioning him- or herself.
+        distance = 1000000  # It seems to work except for one time... I might track it down later
+
     if ed:
         graph.add_edge(u, v, ed)
 
@@ -220,7 +223,7 @@ def remove_degree_zero_nodes(graph):
             graph.remove_node(node)
 
 
-def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_katz=0):
+def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_katz=0, verbose=True, katz=None):
     """
     :param graph: Graph to generate the dataframe from
     :param pairs: (Optional) TRUE-Use all pairs, False-only use non-edges, or a list of tuples of pairs to use
@@ -255,15 +258,20 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, che
         iter_set = pairs
         print("Using the pairs you provided...")
 
-    print("Precomputing katzes....")
-    katz = nx.katz_centrality(graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
+    if verbose and not katz:
+        print("Precomputing katzes....")
+
+    if not katz:
+        katz = nx.katz_centrality(graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
+
     elim = 0
     for n1, n2 in iter_set:
         if random.random() < sampling or (cheat and label_graph and label_graph.has_edge(n1, n2)):
             if allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag'):
                 count += 1
-                if count % 1000000 == 0:
-                    print("%d checked... %d eliminated" % (count, elim))
+                #if verbose:
+                    #if count % 1000000 == 0:
+                        #print("%d checked... %d eliminated" % (count, elim))
                 k_s = np.mean((katz[n1], katz[n2]))
                 if k_s < min_katz:
                     elim += 1
@@ -289,8 +297,8 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, che
     df['spl'] = spl
     df['katz'] = katzes
 
-    print("%d pairs eliminated.... " % (elim))
-    print("%d pairs and %d edges in dataframe" % (count, np.count_nonzero(has_links)))
+    #if verbose:
+        #print("%d pairs checked and %d pairs in dataframe" % (count, df.shape[0]))
 
     return df, labels
 
