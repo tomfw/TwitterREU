@@ -1,0 +1,1967 @@
+{
+    "actor": {
+        "displayName": "xolani jabe", 
+        "favoritesCount": 0, 
+        "followersCount": 12, 
+        "friendsCount": 344, 
+        "id": "id:twitter.com:1228290025", 
+        "image": "https://abs.twimg.com/sticky/default_profile_images/default_profile_4_normal.png", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/zisavela", 
+        "links": [
+            {
+                "href": null, 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 0, 
+        "location": {
+            "displayName": "East London", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2013-02-28T20:02:58.000Z", 
+        "preferredUsername": "zisavela", 
+        "statusesCount": 25, 
+        "summary": null, 
+        "twitterTimeZone": null, 
+        "utcOffset": null, 
+        "verified": false
+    }, 
+    "body": "RT @MyANC_: 365: ANC has indeed made South Africa to be a better place to live in, and together as the youth of South Africa we can move SA\u2026", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for BlackBerry\u00ae", 
+        "link": "http://blackberry.com/twitter"
+    }, 
+    "gnip": {
+        "klout_score": 12, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-keywords", 
+                "value": "(\"south africa\" OR \"south african\" or SA) (\"Pan Africanist Congress\" OR PAC OR \"African Christian Democratic Party\" OR ACDP OR \"Inkatha Freedom Party\" OR IFP OR Buthelezi OR \"Independent Electoral Commission\" OR IEC OR NUMSA OR COSATU OR contains:mine OR  \"African National Congress\" OR ANC OR \"youth league\" OR \"ANC youth league\" OR Zuma OR Mthembu)"
+            }
+        ], 
+        "profileLocations": [
+            {
+                "address": {
+                    "country": "South Africa", 
+                    "countryCode": "ZA", 
+                    "locality": "East London", 
+                    "region": "Eastern Cape"
+                }, 
+                "displayName": "East London, Eastern Cape, South Africa", 
+                "geo": {
+                    "coordinates": [
+                        27.91162, 
+                        -33.01529
+                    ], 
+                    "type": "point"
+                }, 
+                "objectType": "place"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:444910616499982336", 
+    "link": "http://twitter.com/zisavela/statuses/444910616499982336", 
+    "object": {
+        "actor": {
+            "displayName": "ANC Info Feed", 
+            "favoritesCount": 27, 
+            "followersCount": 105094, 
+            "friendsCount": 6547, 
+            "id": "id:twitter.com:18759465", 
+            "image": "https://pbs.twimg.com/profile_images/442876603366780928/4Y0qc9-B_normal.jpeg", 
+            "languages": [
+                "en"
+            ], 
+            "link": "http://www.twitter.com/MyANC_", 
+            "links": [
+                {
+                    "href": "http://www.anc.org.za", 
+                    "rel": "me"
+                }
+            ], 
+            "listedCount": 561, 
+            "location": {
+                "displayName": "South Africa", 
+                "objectType": "place"
+            }, 
+            "objectType": "person", 
+            "postedTime": "2009-01-08T09:53:04.000Z", 
+            "preferredUsername": "MyANC_", 
+            "statusesCount": 8154, 
+            "summary": null, 
+            "twitterTimeZone": "Pretoria", 
+            "utcOffset": "7200", 
+            "verified": false
+        }, 
+        "body": "365: ANC has indeed made South Africa to be a better place to live in, and together as the youth of South Africa we can move SA forward", 
+        "favoritesCount": 1, 
+        "generator": {
+            "displayName": "Twitter for iPad", 
+            "link": "http://twitter.com/#!/download/ipad"
+        }, 
+        "id": "tag:search.twitter.com,2005:444905947807617025", 
+        "link": "http://twitter.com/MyANC_/statuses/444905947807617025", 
+        "object": {
+            "id": "object:search.twitter.com,2005:444905947807617025", 
+            "link": "http://twitter.com/MyANC_/statuses/444905947807617025", 
+            "objectType": "note", 
+            "postedTime": "2014-03-15T18:40:18.000Z", 
+            "summary": "365: ANC has indeed made South Africa to be a better place to live in, and together as the youth of South Africa we can move SA forward"
+        }, 
+        "objectType": "activity", 
+        "postedTime": "2014-03-15T18:40:18.000Z", 
+        "provider": {
+            "displayName": "Twitter", 
+            "link": "http://www.twitter.com", 
+            "objectType": "service"
+        }, 
+        "twitter_entities": {
+            "hashtags": [], 
+            "symbols": [], 
+            "urls": [], 
+            "user_mentions": []
+        }, 
+        "twitter_lang": "en", 
+        "verb": "post"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-03-15T18:58:51.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 5, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 18759465, 
+                "id_str": "18759465", 
+                "indices": [
+                    3, 
+                    10
+                ], 
+                "name": "ANC Info Feed", 
+                "screen_name": "MyANC_"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "share"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "Marina van Zyl", 
+        "favoritesCount": 158, 
+        "followersCount": 102, 
+        "friendsCount": 299, 
+        "id": "id:twitter.com:47149825", 
+        "image": "https://pbs.twimg.com/profile_images/1135249677/image004_normal.jpg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/marinavanzyl", 
+        "links": [
+            {
+                "href": null, 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 2, 
+        "objectType": "person", 
+        "postedTime": "2009-06-14T18:59:10.000Z", 
+        "preferredUsername": "marinavanzyl", 
+        "statusesCount": 4508, 
+        "summary": null, 
+        "twitterTimeZone": "Greenland", 
+        "utcOffset": "-10800", 
+        "verified": false
+    }, 
+    "body": "RT @DA_News: Hi @umar_farouk7  You can contact your provincial DA office about getting a T-shirt on 010 593 3024. @helenzille @Jo1Coetzee", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for Android", 
+        "link": "http://twitter.com/download/android"
+    }, 
+    "gnip": {
+        "klout_score": 24, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-central-accounts", 
+                "value": "from:2995663598 OR to:2995663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR from:295663598 OR to:295663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR @SAPresident OR @helenzille OR @Julius_S_Malema OR @MamphelaR OR @ANCParliament OR @JacksonMthembu_"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:445187144311504896", 
+    "link": "http://twitter.com/marinavanzyl/statuses/445187144311504896", 
+    "object": {
+        "actor": {
+            "displayName": "Democratic Alliance", 
+            "favoritesCount": 1595, 
+            "followersCount": 66937, 
+            "friendsCount": 26066, 
+            "id": "id:twitter.com:23594033", 
+            "image": "https://pbs.twimg.com/profile_images/439663107292413952/BlC1x2i__normal.jpeg", 
+            "languages": [
+                "en"
+            ], 
+            "link": "http://www.twitter.com/DA_News", 
+            "links": [
+                {
+                    "href": "http://da.org.za", 
+                    "rel": "me"
+                }
+            ], 
+            "listedCount": 387, 
+            "location": {
+                "displayName": "South Africa", 
+                "objectType": "place"
+            }, 
+            "objectType": "person", 
+            "postedTime": "2009-03-10T13:58:45.000Z", 
+            "preferredUsername": "DA_News", 
+            "statusesCount": 22465, 
+            "summary": "Working to build an Open, Opportunity Society for All in South Africa.", 
+            "twitterTimeZone": "Harare", 
+            "utcOffset": "7200", 
+            "verified": false
+        }, 
+        "body": "Hi @umar_farouk7  You can contact your provincial DA office about getting a T-shirt on 010 593 3024. @helenzille @Jo1Coetzee", 
+        "favoritesCount": 3, 
+        "generator": {
+            "displayName": "web", 
+            "link": "http://twitter.com"
+        }, 
+        "id": "tag:search.twitter.com,2005:445122376880373760", 
+        "inReplyTo": {
+            "link": "http://twitter.com/umar_farouk7/statuses/445121545900269568"
+        }, 
+        "link": "http://twitter.com/DA_News/statuses/445122376880373760", 
+        "location": {
+            "country_code": "South Africa", 
+            "displayName": "Randburg, Gauteng", 
+            "geo": {
+                "coordinates": [
+                    [
+                        [
+                            27.8925632, 
+                            -26.136857
+                        ], 
+                        [
+                            27.8925632, 
+                            -25.9025742
+                        ], 
+                        [
+                            28.0223519, 
+                            -25.9025742
+                        ], 
+                        [
+                            28.0223519, 
+                            -26.136857
+                        ]
+                    ]
+                ], 
+                "type": "Polygon"
+            }, 
+            "link": "https://api.twitter.com/1.1/geo/id/d73e8f8ebdd03aff.json", 
+            "name": "Randburg", 
+            "objectType": "place", 
+            "twitter_country_code": "ZA", 
+            "twitter_place_type": "city"
+        }, 
+        "object": {
+            "id": "object:search.twitter.com,2005:445122376880373760", 
+            "link": "http://twitter.com/DA_News/statuses/445122376880373760", 
+            "objectType": "note", 
+            "postedTime": "2014-03-16T09:00:19.000Z", 
+            "summary": "Hi @umar_farouk7  You can contact your provincial DA office about getting a T-shirt on 010 593 3024. @helenzille @Jo1Coetzee"
+        }, 
+        "objectType": "activity", 
+        "postedTime": "2014-03-16T09:00:19.000Z", 
+        "provider": {
+            "displayName": "Twitter", 
+            "link": "http://www.twitter.com", 
+            "objectType": "service"
+        }, 
+        "twitter_entities": {
+            "hashtags": [], 
+            "symbols": [], 
+            "urls": [], 
+            "user_mentions": [
+                {
+                    "id": 1922302106, 
+                    "id_str": "1922302106", 
+                    "indices": [
+                        3, 
+                        16
+                    ], 
+                    "name": "Umar Farouk Mathir", 
+                    "screen_name": "umar_farouk7"
+                }, 
+                {
+                    "id": 20521828, 
+                    "id_str": "20521828", 
+                    "indices": [
+                        101, 
+                        112
+                    ], 
+                    "name": "Helen Zille", 
+                    "screen_name": "helenzille"
+                }, 
+                {
+                    "id": 251641561, 
+                    "id_str": "251641561", 
+                    "indices": [
+                        113, 
+                        124
+                    ], 
+                    "name": "Johann Coetzee", 
+                    "screen_name": "Jo1Coetzee"
+                }
+            ]
+        }, 
+        "twitter_lang": "en", 
+        "verb": "post"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-03-16T13:17:41.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 8, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 23594033, 
+                "id_str": "23594033", 
+                "indices": [
+                    3, 
+                    11
+                ], 
+                "name": "Democratic Alliance", 
+                "screen_name": "DA_News"
+            }, 
+            {
+                "id": 1922302106, 
+                "id_str": "1922302106", 
+                "indices": [
+                    16, 
+                    29
+                ], 
+                "name": "Umar Farouk Mathir", 
+                "screen_name": "umar_farouk7"
+            }, 
+            {
+                "id": 20521828, 
+                "id_str": "20521828", 
+                "indices": [
+                    114, 
+                    125
+                ], 
+                "name": "Helen Zille", 
+                "screen_name": "helenzille"
+            }, 
+            {
+                "id": 251641561, 
+                "id_str": "251641561", 
+                "indices": [
+                    126, 
+                    137
+                ], 
+                "name": "Johann Coetzee", 
+                "screen_name": "Jo1Coetzee"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "share"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "Brigette Fell", 
+        "favoritesCount": 544, 
+        "followersCount": 139, 
+        "friendsCount": 228, 
+        "id": "id:twitter.com:826633236", 
+        "image": "https://pbs.twimg.com/profile_images/378800000467409521/c8d6301e8a0030143276eed73ca84f2a_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/BrigetteFell", 
+        "links": [
+            {
+                "href": null, 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 4, 
+        "location": {
+            "displayName": "Cape Town", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2012-09-16T06:43:46.000Z", 
+        "preferredUsername": "BrigetteFell", 
+        "statusesCount": 3237, 
+        "summary": "Theatre lover. Weirdo. Giggly. Australian wannabe. Fishy.", 
+        "twitterTimeZone": "Athens", 
+        "utcOffset": "7200", 
+        "verified": false
+    }, 
+    "body": "@vivnyathi @EsethU_U @helenzille yoh, you are living in the past! Time to perhaps move on and forward to make SA a better place?", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for iPhone", 
+        "link": "http://twitter.com/download/iphone"
+    }, 
+    "gnip": {
+        "klout_score": 43, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-central-accounts", 
+                "value": "from:2995663598 OR to:2995663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR from:295663598 OR to:295663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR @SAPresident OR @helenzille OR @Julius_S_Malema OR @MamphelaR OR @ANCParliament OR @JacksonMthembu_"
+            }
+        ], 
+        "profileLocations": [
+            {
+                "address": {
+                    "country": "South Africa", 
+                    "countryCode": "ZA", 
+                    "locality": "Cape Town", 
+                    "region": "Western Cape"
+                }, 
+                "displayName": "Cape Town, Western Cape, South Africa", 
+                "geo": {
+                    "coordinates": [
+                        18.42322, 
+                        -33.92584
+                    ], 
+                    "type": "point"
+                }, 
+                "objectType": "place"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:446548772114661376", 
+    "inReplyTo": {
+        "link": "http://twitter.com/vivnyathi/statuses/446544050167234560"
+    }, 
+    "link": "http://twitter.com/BrigetteFell/statuses/446548772114661376", 
+    "object": {
+        "id": "object:search.twitter.com,2005:446548772114661376", 
+        "link": "http://twitter.com/BrigetteFell/statuses/446548772114661376", 
+        "objectType": "note", 
+        "postedTime": "2014-03-20T07:28:18.000Z", 
+        "summary": "@vivnyathi @EsethU_U @helenzille yoh, you are living in the past! Time to perhaps move on and forward to make SA a better place?"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-03-20T07:28:18.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 0, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 614168929, 
+                "id_str": "614168929", 
+                "indices": [
+                    0, 
+                    10
+                ], 
+                "name": "Vivian Nyathi", 
+                "screen_name": "vivnyathi"
+            }, 
+            {
+                "id": 108888965, 
+                "id_str": "108888965", 
+                "indices": [
+                    11, 
+                    20
+                ], 
+                "name": "No evidence JZ lied", 
+                "screen_name": "EsethU_U"
+            }, 
+            {
+                "id": 20521828, 
+                "id_str": "20521828", 
+                "indices": [
+                    21, 
+                    32
+                ], 
+                "name": "Helen Zille", 
+                "screen_name": "helenzille"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "post"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "Tony Beamish", 
+        "favoritesCount": 10, 
+        "followersCount": 380, 
+        "friendsCount": 195, 
+        "id": "id:twitter.com:457558572", 
+        "image": "https://pbs.twimg.com/profile_images/378800000702005221/57b2791072317b364c6f2c87546d547b_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/TonyBeamish", 
+        "links": [
+            {
+                "href": "http://www.moneyweb.co.za", 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 5, 
+        "location": {
+            "displayName": "Johannesbourg", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2012-01-07T15:11:35.000Z", 
+        "preferredUsername": "TonyBeamish", 
+        "statusesCount": 4146, 
+        "summary": "Print category winner of the Webber Wentzel Legal Journalist of the Year Award 2013. tony@beamish.co.za      @moneyweb BBM: 7c184980", 
+        "twitterTimeZone": "Athens", 
+        "utcOffset": "7200", 
+        "verified": false
+    }, 
+    "body": "\u201cWhat Nkandla\u2019s millions could have bought South Africans\u201d - @Moneyweb The avarice of @SAPresident know no limits. http://t.co/3sffJcrJwO", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "OS X", 
+        "link": "http://www.apple.com/"
+    }, 
+    "gnip": {
+        "klout_score": 48, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-central-accounts", 
+                "value": "from:2995663598 OR to:2995663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR from:295663598 OR to:295663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR @SAPresident OR @helenzille OR @Julius_S_Malema OR @MamphelaR OR @ANCParliament OR @JacksonMthembu_"
+            }
+        ], 
+        "profileLocations": [
+            {
+                "address": {
+                    "country": "South Africa", 
+                    "countryCode": "ZA", 
+                    "locality": "Johannesburg", 
+                    "region": "Gauteng"
+                }, 
+                "displayName": "Johannesburg, Gauteng, South Africa", 
+                "geo": {
+                    "coordinates": [
+                        28.04363, 
+                        -26.20227
+                    ], 
+                    "type": "point"
+                }, 
+                "objectType": "place"
+            }
+        ], 
+        "urls": [
+            {
+                "expanded_status": 200, 
+                "expanded_url": "http://www.moneyweb.co.za/moneyweb-south-africa/what-nkandlas-millions-could-have-bought-south-afr", 
+                "url": "http://t.co/3sffJcrJwO"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:446601358683410433", 
+    "link": "http://twitter.com/TonyBeamish/statuses/446601358683410433", 
+    "object": {
+        "id": "object:search.twitter.com,2005:446601358683410433", 
+        "link": "http://twitter.com/TonyBeamish/statuses/446601358683410433", 
+        "objectType": "note", 
+        "postedTime": "2014-03-20T10:57:16.000Z", 
+        "summary": "\u201cWhat Nkandla\u2019s millions could have bought South Africans\u201d - @Moneyweb The avarice of @SAPresident know no limits. http://t.co/3sffJcrJwO"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-03-20T10:57:16.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 0, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [
+            {
+                "display_url": "moneyweb.co.za/moneyweb-south\u2026", 
+                "expanded_url": "http://www.moneyweb.co.za/moneyweb-south-africa/what-nkandlas-millions-could-have-bought-south-afr", 
+                "indices": [
+                    115, 
+                    137
+                ], 
+                "url": "http://t.co/3sffJcrJwO"
+            }
+        ], 
+        "user_mentions": [
+            {
+                "id": 22752995, 
+                "id_str": "22752995", 
+                "indices": [
+                    61, 
+                    70
+                ], 
+                "name": "Moneyweb News ", 
+                "screen_name": "Moneyweb"
+            }, 
+            {
+                "id": 295663598, 
+                "id_str": "295663598", 
+                "indices": [
+                    86, 
+                    98
+                ], 
+                "name": "Jacob G. Zuma", 
+                "screen_name": "SAPresident"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "post"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "Nikola Galic", 
+        "favoritesCount": 1, 
+        "followersCount": 17, 
+        "friendsCount": 94, 
+        "id": "id:twitter.com:43099827", 
+        "image": "https://pbs.twimg.com/profile_images/434406768186499072/OjX68fwB_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/NikolaGalic", 
+        "links": [
+            {
+                "href": null, 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 0, 
+        "location": {
+            "displayName": "Plettenberg Bay", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2009-05-28T12:33:10.000Z", 
+        "preferredUsername": "NikolaGalic", 
+        "statusesCount": 212, 
+        "summary": "The Serb", 
+        "twitterTimeZone": "Pretoria", 
+        "utcOffset": "7200", 
+        "verified": false
+    }, 
+    "body": "RT @DA_News: What #Nkandla really cost South Africa: 2050 RDP houses http://t.co/wD4DkR7j1P", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for iPhone", 
+        "link": "http://twitter.com/download/iphone"
+    }, 
+    "gnip": {
+        "klout_score": 16, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-keywords", 
+                "value": "(\"south africa\" OR \"south african\" or SA) (\"Economic Freedom Fighters\" OR EFF OR Malema OR \"Democratic Alliance\" OR DA OR Zille OR Mazibuko OR Agang OR Ramphele OR \"African Independent Congress\" OR AIC OR \"Congress of the People\" OR COPE OR \"National Freedom Party\" OR NFP OR \"United Democratic Movement\" OR UDM OR \"Freedom Front Plus\" OR FF+ OR VF+)"
+            }
+        ], 
+        "profileLocations": [
+            {
+                "address": {
+                    "country": "South Africa", 
+                    "countryCode": "ZA", 
+                    "locality": "Plettenberg Bay", 
+                    "region": "Western Cape"
+                }, 
+                "displayName": "Plettenberg Bay, Western Cape, South Africa", 
+                "geo": {
+                    "coordinates": [
+                        23.3716, 
+                        -34.05274
+                    ], 
+                    "type": "point"
+                }, 
+                "objectType": "place"
+            }
+        ], 
+        "urls": [
+            {
+                "expanded_status": 200, 
+                "expanded_url": "http://twitter.com/DA_News/status/446666935803985921/photo/1", 
+                "url": "http://t.co/wD4DkR7j1P"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:446928549690474496", 
+    "link": "http://twitter.com/NikolaGalic/statuses/446928549690474496", 
+    "object": {
+        "actor": {
+            "displayName": "Democratic Alliance", 
+            "favoritesCount": 1602, 
+            "followersCount": 68265, 
+            "friendsCount": 26071, 
+            "id": "id:twitter.com:23594033", 
+            "image": "https://pbs.twimg.com/profile_images/439663107292413952/BlC1x2i__normal.jpeg", 
+            "languages": [
+                "en"
+            ], 
+            "link": "http://www.twitter.com/DA_News", 
+            "links": [
+                {
+                    "href": "http://da.org.za", 
+                    "rel": "me"
+                }
+            ], 
+            "listedCount": 393, 
+            "location": {
+                "displayName": "South Africa", 
+                "objectType": "place"
+            }, 
+            "objectType": "person", 
+            "postedTime": "2009-03-10T13:58:45.000Z", 
+            "preferredUsername": "DA_News", 
+            "statusesCount": 22719, 
+            "summary": "Working to build an Open, Opportunity Society for All in South Africa.", 
+            "twitterTimeZone": "Harare", 
+            "utcOffset": "7200", 
+            "verified": false
+        }, 
+        "body": "What #Nkandla really cost South Africa: 2050 RDP houses http://t.co/wD4DkR7j1P", 
+        "favoritesCount": 22, 
+        "generator": {
+            "displayName": "web", 
+            "link": "http://twitter.com"
+        }, 
+        "id": "tag:search.twitter.com,2005:446666935803985921", 
+        "link": "http://twitter.com/DA_News/statuses/446666935803985921", 
+        "object": {
+            "id": "object:search.twitter.com,2005:446666935803985921", 
+            "link": "http://twitter.com/DA_News/statuses/446666935803985921", 
+            "objectType": "note", 
+            "postedTime": "2014-03-20T15:17:50.000Z", 
+            "summary": "What #Nkandla really cost South Africa: 2050 RDP houses http://t.co/wD4DkR7j1P"
+        }, 
+        "objectType": "activity", 
+        "postedTime": "2014-03-20T15:17:50.000Z", 
+        "provider": {
+            "displayName": "Twitter", 
+            "link": "http://www.twitter.com", 
+            "objectType": "service"
+        }, 
+        "twitter_entities": {
+            "hashtags": [
+                {
+                    "indices": [
+                        5, 
+                        13
+                    ], 
+                    "text": "Nkandla"
+                }
+            ], 
+            "media": [
+                {
+                    "display_url": "pic.twitter.com/wD4DkR7j1P", 
+                    "expanded_url": "http://twitter.com/DA_News/status/446666935803985921/photo/1", 
+                    "id": 446666935812374528, 
+                    "id_str": "446666935812374528", 
+                    "indices": [
+                        56, 
+                        78
+                    ], 
+                    "media_url": "http://pbs.twimg.com/media/BjLhNioCQAAG3lL.jpg", 
+                    "media_url_https": "https://pbs.twimg.com/media/BjLhNioCQAAG3lL.jpg", 
+                    "sizes": {
+                        "large": {
+                            "h": 408, 
+                            "resize": "fit", 
+                            "w": 1024
+                        }, 
+                        "medium": {
+                            "h": 239, 
+                            "resize": "fit", 
+                            "w": 600
+                        }, 
+                        "small": {
+                            "h": 135, 
+                            "resize": "fit", 
+                            "w": 340
+                        }, 
+                        "thumb": {
+                            "h": 150, 
+                            "resize": "crop", 
+                            "w": 150
+                        }
+                    }, 
+                    "type": "photo", 
+                    "url": "http://t.co/wD4DkR7j1P"
+                }
+            ], 
+            "symbols": [], 
+            "urls": [], 
+            "user_mentions": []
+        }, 
+        "twitter_lang": "en", 
+        "verb": "post"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-03-21T08:37:24.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 180, 
+    "twitter_entities": {
+        "hashtags": [
+            {
+                "indices": [
+                    18, 
+                    26
+                ], 
+                "text": "Nkandla"
+            }
+        ], 
+        "media": [
+            {
+                "display_url": "pic.twitter.com/wD4DkR7j1P", 
+                "expanded_url": "http://twitter.com/DA_News/status/446666935803985921/photo/1", 
+                "id": 446666935812374528, 
+                "id_str": "446666935812374528", 
+                "indices": [
+                    69, 
+                    91
+                ], 
+                "media_url": "http://pbs.twimg.com/media/BjLhNioCQAAG3lL.jpg", 
+                "media_url_https": "https://pbs.twimg.com/media/BjLhNioCQAAG3lL.jpg", 
+                "sizes": {
+                    "large": {
+                        "h": 408, 
+                        "resize": "fit", 
+                        "w": 1024
+                    }, 
+                    "medium": {
+                        "h": 239, 
+                        "resize": "fit", 
+                        "w": 600
+                    }, 
+                    "small": {
+                        "h": 135, 
+                        "resize": "fit", 
+                        "w": 340
+                    }, 
+                    "thumb": {
+                        "h": 150, 
+                        "resize": "crop", 
+                        "w": 150
+                    }
+                }, 
+                "type": "photo", 
+                "url": "http://t.co/wD4DkR7j1P"
+            }
+        ], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 23594033, 
+                "id_str": "23594033", 
+                "indices": [
+                    3, 
+                    11
+                ], 
+                "name": "Democratic Alliance", 
+                "screen_name": "DA_News"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "share"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "linda mcallister", 
+        "favoritesCount": 1081, 
+        "followersCount": 652, 
+        "friendsCount": 1295, 
+        "id": "id:twitter.com:395857274", 
+        "image": "https://pbs.twimg.com/profile_images/378800000496948466/f97f9574021a831c621598533e7b7e97_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/linda_annmca", 
+        "links": [
+            {
+                "href": null, 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 1, 
+        "location": {
+            "displayName": "Cape Town S.A", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2011-10-22T11:02:29.000Z", 
+        "preferredUsername": "linda_annmca", 
+        "statusesCount": 17590, 
+        "summary": "I am who and what God made me to be .Jesus follower! L\u0131v\u0131ng the paleo l\u0131fe ...", 
+        "twitterTimeZone": null, 
+        "utcOffset": null, 
+        "verified": false
+    }, 
+    "body": "RT @Hannatwiets: Mass genocide of white people in South Africa, the world must know. http://t.co/hSK1hqUiZW", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for BlackBerry\u00ae", 
+        "link": "http://blackberry.com/twitter"
+    }, 
+    "gnip": {
+        "klout_score": 33, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-keywords", 
+                "value": "(\"south africa\" OR \"south african\" OR SA) (black OR white OR race OR racial OR racism)"
+            }
+        ], 
+        "profileLocations": [
+            {
+                "address": {
+                    "country": "South Africa", 
+                    "countryCode": "ZA", 
+                    "locality": "Cape Town", 
+                    "region": "Western Cape"
+                }, 
+                "displayName": "Cape Town, Western Cape, South Africa", 
+                "geo": {
+                    "coordinates": [
+                        18.42322, 
+                        -33.92584
+                    ], 
+                    "type": "point"
+                }, 
+                "objectType": "place"
+            }
+        ], 
+        "urls": [
+            {
+                "expanded_status": 200, 
+                "expanded_url": "http://www.censorbugbear.org/farmitracker/reports/view/1700", 
+                "url": "http://t.co/hSK1hqUiZW"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:447354027836469248", 
+    "link": "http://twitter.com/linda_annmca/statuses/447354027836469248", 
+    "object": {
+        "actor": {
+            "displayName": "Hanna vd Westhuizen ", 
+            "favoritesCount": 685, 
+            "followersCount": 769, 
+            "friendsCount": 547, 
+            "id": "id:twitter.com:57001084", 
+            "image": "https://pbs.twimg.com/profile_images/378800000583179412/b70477e8ec60f145ad5deabd01d77604_normal.png", 
+            "languages": [
+                "en"
+            ], 
+            "link": "http://www.twitter.com/Hannatwiets", 
+            "links": [
+                {
+                    "href": null, 
+                    "rel": "me"
+                }
+            ], 
+            "listedCount": 8, 
+            "location": {
+                "displayName": "South Africa", 
+                "objectType": "place"
+            }, 
+            "objectType": "person", 
+            "postedTime": "2009-07-15T12:22:53.000Z", 
+            "preferredUsername": "Hannatwiets", 
+            "statusesCount": 7438, 
+            "summary": "Wit, Afrikaanse Boeremeisie. Anti Liberale Media. Following you does not mean I endorse what you say or believe in.", 
+            "twitterTimeZone": "Pretoria", 
+            "utcOffset": "7200", 
+            "verified": false
+        }, 
+        "body": "Mass genocide of white people in South Africa, the world must know. http://t.co/hSK1hqUiZW", 
+        "favoritesCount": 0, 
+        "generator": {
+            "displayName": "Thunderclap", 
+            "link": "https://www.thunderclap.it"
+        }, 
+        "id": "tag:search.twitter.com,2005:440427258722123777", 
+        "link": "http://twitter.com/Hannatwiets/statuses/440427258722123777", 
+        "object": {
+            "id": "object:search.twitter.com,2005:440427258722123777", 
+            "link": "http://twitter.com/Hannatwiets/statuses/440427258722123777", 
+            "objectType": "note", 
+            "postedTime": "2014-03-03T10:03:35.000Z", 
+            "summary": "Mass genocide of white people in South Africa, the world must know. http://t.co/hSK1hqUiZW"
+        }, 
+        "objectType": "activity", 
+        "postedTime": "2014-03-03T10:03:35.000Z", 
+        "provider": {
+            "displayName": "Twitter", 
+            "link": "http://www.twitter.com", 
+            "objectType": "service"
+        }, 
+        "twitter_entities": {
+            "hashtags": [], 
+            "symbols": [], 
+            "urls": [
+                {
+                    "display_url": "thndr.it/1ePpC8z", 
+                    "expanded_url": "http://thndr.it/1ePpC8z", 
+                    "indices": [
+                        68, 
+                        90
+                    ], 
+                    "url": "http://t.co/hSK1hqUiZW"
+                }
+            ], 
+            "user_mentions": []
+        }, 
+        "twitter_lang": "en", 
+        "verb": "post"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-03-22T12:48:06.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 4, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [
+            {
+                "display_url": "thndr.it/1ePpC8z", 
+                "expanded_url": "http://thndr.it/1ePpC8z", 
+                "indices": [
+                    85, 
+                    107
+                ], 
+                "url": "http://t.co/hSK1hqUiZW"
+            }
+        ], 
+        "user_mentions": [
+            {
+                "id": 57001084, 
+                "id_str": "57001084", 
+                "indices": [
+                    3, 
+                    15
+                ], 
+                "name": "Hanna vd Westhuizen ", 
+                "screen_name": "Hannatwiets"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "share"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "The President\u2606\u2605\u2606\u2605~", 
+        "favoritesCount": 20, 
+        "followersCount": 216, 
+        "friendsCount": 175, 
+        "id": "id:twitter.com:767600030", 
+        "image": "https://pbs.twimg.com/profile_images/450087502914019329/q_9y09MR_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/akanigates", 
+        "links": [
+            {
+                "href": "http://globalicon.com", 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 0, 
+        "location": {
+            "displayName": "Pitori/jozi", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2012-08-19T13:51:48.000Z", 
+        "preferredUsername": "akanigates", 
+        "statusesCount": 7007, 
+        "summary": "Draughtsman |Artisan | Entreprenuer | Freelance recruiter | Billion Rand idea | Politics crazed | i invented Calamari | Hustle | Gandulf | Fighter  | i got this", 
+        "twitterTimeZone": null, 
+        "utcOffset": null, 
+        "verified": false
+    }, 
+    "body": "@Radio702 th3 DA is insane so they reckon black ppl cant lead their own country or ppl I dnt wat @helenzille  is sellin enaf of ths woman", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for Android", 
+        "link": "http://twitter.com/download/android"
+    }, 
+    "gnip": {
+        "klout_score": 45, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-central-accounts", 
+                "value": "from:2995663598 OR to:2995663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR from:295663598 OR to:295663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR @SAPresident OR @helenzille OR @Julius_S_Malema OR @MamphelaR OR @ANCParliament OR @JacksonMthembu_"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:450141853355352064", 
+    "inReplyTo": {
+        "link": "http://twitter.com/Radio702/statuses/450135106594693121"
+    }, 
+    "link": "http://twitter.com/akanigates/statuses/450141853355352064", 
+    "object": {
+        "id": "object:search.twitter.com,2005:450141853355352064", 
+        "link": "http://twitter.com/akanigates/statuses/450141853355352064", 
+        "objectType": "note", 
+        "postedTime": "2014-03-30T05:25:55.000Z", 
+        "summary": "@Radio702 th3 DA is insane so they reckon black ppl cant lead their own country or ppl I dnt wat @helenzille  is sellin enaf of ths woman"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-03-30T05:25:55.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 0, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 19333738, 
+                "id_str": "19333738", 
+                "indices": [
+                    0, 
+                    9
+                ], 
+                "name": "Talk Radio 702", 
+                "screen_name": "Radio702"
+            }, 
+            {
+                "id": 20521828, 
+                "id_str": "20521828", 
+                "indices": [
+                    97, 
+                    108
+                ], 
+                "name": "Helen Zille", 
+                "screen_name": "helenzille"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "post"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "ALETTAHA\u263a\u2665\u2600", 
+        "favoritesCount": 234, 
+        "followersCount": 1019, 
+        "friendsCount": 2, 
+        "id": "id:twitter.com:337554845", 
+        "image": "https://pbs.twimg.com/profile_images/378800000840490685/5fb265ee75cf562408a98abbeef019e9_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/ALETTAHA", 
+        "links": [
+            {
+                "href": null, 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 8, 
+        "location": {
+            "displayName": "CPT SA Defending the underdog\u2611", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2011-07-18T06:23:42.000Z", 
+        "preferredUsername": "ALETTAHA", 
+        "statusesCount": 39301, 
+        "summary": "Each person in life should be treated with respect, even those that don't deserve it. \u263a\u2665\u2600 \u266c\u266c\u266c\u266c\u266c\u266c\u266c\u266c\u266c\u266c\u266c *I am the gatekeeper of the hashtag \u25ba #capetownisawesome *", 
+        "twitterTimeZone": null, 
+        "utcOffset": null, 
+        "verified": false
+    }, 
+    "body": "South Africans really need 2 lighten up. We r bcuming a Nation of grouches + naggers. Laugh a little dammit. U might like it!\u263a @helenzille", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for BlackBerry\u00ae", 
+        "link": "http://blackberry.com/twitter"
+    }, 
+    "gnip": {
+        "klout_score": 48, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-central-accounts", 
+                "value": "from:2995663598 OR to:2995663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR from:295663598 OR to:295663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR @SAPresident OR @helenzille OR @Julius_S_Malema OR @MamphelaR OR @ANCParliament OR @JacksonMthembu_"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:450963646173446144", 
+    "link": "http://twitter.com/ALETTAHA/statuses/450963646173446144", 
+    "object": {
+        "id": "object:search.twitter.com,2005:450963646173446144", 
+        "link": "http://twitter.com/ALETTAHA/statuses/450963646173446144", 
+        "objectType": "note", 
+        "postedTime": "2014-04-01T11:51:26.000Z", 
+        "summary": "South Africans really need 2 lighten up. We r bcuming a Nation of grouches + naggers. Laugh a little dammit. U might like it!\u263a @helenzille"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-04-01T11:51:26.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 0, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 20521828, 
+                "id_str": "20521828", 
+                "indices": [
+                    127, 
+                    138
+                ], 
+                "name": "Helen Zille", 
+                "screen_name": "helenzille"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "post"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "Comrade Lloyd", 
+        "favoritesCount": 167, 
+        "followersCount": 870, 
+        "friendsCount": 633, 
+        "id": "id:twitter.com:50604449", 
+        "image": "https://pbs.twimg.com/profile_images/446610601612021760/lE04kJvX_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/Lloyd_Robinson", 
+        "links": [
+            {
+                "href": "https://www.facebook.com/#!/lloyd.robinson1", 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 15, 
+        "location": {
+            "displayName": "South Africa", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2009-06-25T09:55:12.000Z", 
+        "preferredUsername": "Lloyd_Robinson", 
+        "statusesCount": 8827, 
+        "summary": "Democratic Alliance Ward93 JHB Chairperson. Defender of democracy and the constitution. - WINNING GAUTENG ON 7th MAY 2014 IS EVERYTHING!", 
+        "twitterTimeZone": "Pretoria", 
+        "utcOffset": "7200", 
+        "verified": false
+    }, 
+    "body": "\"@DA_News: DA finds thousands of undelivered #LimpopoTextbooks -&gt; http://t.co/dwPkO6ibQT\" -\"ANC Moving South Africa Forward\" my ass they are", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for Android", 
+        "link": "http://twitter.com/download/android"
+    }, 
+    "gnip": {
+        "klout_score": 50, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-keywords", 
+                "value": "(\"south africa\" OR \"south african\" or SA) (\"Economic Freedom Fighters\" OR EFF OR Malema OR \"Democratic Alliance\" OR DA OR Zille OR Mazibuko OR Agang OR Ramphele OR \"African Independent Congress\" OR AIC OR \"Congress of the People\" OR COPE OR \"National Freedom Party\" OR NFP OR \"United Democratic Movement\" OR UDM OR \"Freedom Front Plus\" OR FF+ OR VF+)"
+            }, 
+            {
+                "tag": "umd-sme-keywords", 
+                "value": "(\"south africa\" OR \"south african\" or SA) (\"Pan Africanist Congress\" OR PAC OR \"African Christian Democratic Party\" OR ACDP OR \"Inkatha Freedom Party\" OR IFP OR Buthelezi OR \"Independent Electoral Commission\" OR IEC OR NUMSA OR COSATU OR contains:mine OR  \"African National Congress\" OR ANC OR \"youth league\" OR \"ANC youth league\" OR Zuma OR Mthembu)"
+            }
+        ], 
+        "profileLocations": [
+            {
+                "address": {
+                    "country": "South Africa", 
+                    "countryCode": "ZA"
+                }, 
+                "displayName": "South Africa", 
+                "geo": {
+                    "coordinates": [
+                        24.0, 
+                        -29.0
+                    ], 
+                    "type": "point"
+                }, 
+                "objectType": "place"
+            }
+        ], 
+        "urls": [
+            {
+                "expanded_status": 200, 
+                "expanded_url": "http://da.org.za/newsroom.htm?action=view-news-item&id=13626", 
+                "url": "http://t.co/dwPkO6ibQT"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:451711301723516928", 
+    "link": "http://twitter.com/Lloyd_Robinson/statuses/451711301723516928", 
+    "object": {
+        "id": "object:search.twitter.com,2005:451711301723516928", 
+        "link": "http://twitter.com/Lloyd_Robinson/statuses/451711301723516928", 
+        "objectType": "note", 
+        "postedTime": "2014-04-03T13:22:21.000Z", 
+        "summary": "\"@DA_News: DA finds thousands of undelivered #LimpopoTextbooks -&gt; http://t.co/dwPkO6ibQT\" -\"ANC Moving South Africa Forward\" my ass they are"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-04-03T13:22:21.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 0, 
+    "twitter_entities": {
+        "hashtags": [
+            {
+                "indices": [
+                    45, 
+                    62
+                ], 
+                "text": "LimpopoTextbooks"
+            }
+        ], 
+        "symbols": [], 
+        "urls": [
+            {
+                "display_url": "da.org.za/newsroom.htm?a\u2026", 
+                "expanded_url": "http://da.org.za/newsroom.htm?action=view-news-item&id=13626", 
+                "indices": [
+                    69, 
+                    91
+                ], 
+                "url": "http://t.co/dwPkO6ibQT"
+            }
+        ], 
+        "user_mentions": [
+            {
+                "id": 23594033, 
+                "id_str": "23594033", 
+                "indices": [
+                    1, 
+                    9
+                ], 
+                "name": "Democratic Alliance", 
+                "screen_name": "DA_News"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "post"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "Khadiamovha", 
+        "favoritesCount": 4, 
+        "followersCount": 103, 
+        "friendsCount": 51, 
+        "id": "id:twitter.com:1174718899", 
+        "image": "https://pbs.twimg.com/profile_images/418496685128814592/IpPNkmnr_normal.jpeg", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/Phathu501", 
+        "links": [
+            {
+                "href": null, 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 0, 
+        "location": {
+            "displayName": "Polokwane", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2013-02-13T10:08:39.000Z", 
+        "preferredUsername": "Phathu501", 
+        "statusesCount": 7219, 
+        "summary": "I am that I am", 
+        "twitterTimeZone": null, 
+        "utcOffset": null, 
+        "verified": false
+    }, 
+    "body": "RT @EconFreedomZA: On stage @Julius_S_Malema in #JanKempdorp to inspire hope for economic emancipation #VoteEFF http://t.co/GwsbtoOGx4", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Twitter for BlackBerry\u00ae", 
+        "link": "http://blackberry.com/twitter"
+    }, 
+    "gnip": {
+        "klout_score": 34, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-central-accounts", 
+                "value": "from:2995663598 OR to:2995663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR from:295663598 OR to:295663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR @SAPresident OR @helenzille OR @Julius_S_Malema OR @MamphelaR OR @ANCParliament OR @JacksonMthembu_"
+            }
+        ], 
+        "profileLocations": [
+            {
+                "address": {
+                    "country": "South Africa", 
+                    "countryCode": "ZA", 
+                    "locality": "Polokwane", 
+                    "region": "Limpopo"
+                }, 
+                "displayName": "Polokwane, Limpopo, South Africa", 
+                "geo": {
+                    "coordinates": [
+                        29.46885, 
+                        -23.90448
+                    ], 
+                    "type": "point"
+                }, 
+                "objectType": "place"
+            }
+        ], 
+        "urls": [
+            {
+                "expanded_status": 200, 
+                "expanded_url": "http://twitter.com/EconFreedomZA/status/452414431931420672/photo/1", 
+                "url": "http://t.co/GwsbtoOGx4"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:452416589942775808", 
+    "link": "http://twitter.com/Phathu501/statuses/452416589942775808", 
+    "object": {
+        "actor": {
+            "displayName": "EconomicFreedom", 
+            "favoritesCount": 269, 
+            "followersCount": 40145, 
+            "friendsCount": 10675, 
+            "id": "id:twitter.com:932163222", 
+            "image": "https://pbs.twimg.com/profile_images/439334805399175168/UlAovWZh_normal.jpeg", 
+            "languages": [
+                "en"
+            ], 
+            "link": "http://www.twitter.com/EconFreedomZA", 
+            "links": [
+                {
+                    "href": "http://www.effighters.org.za", 
+                    "rel": "me"
+                }
+            ], 
+            "listedCount": 175, 
+            "location": {
+                "displayName": "ZA", 
+                "objectType": "place"
+            }, 
+            "objectType": "person", 
+            "postedTime": "2012-11-07T14:25:24.000Z", 
+            "preferredUsername": "EconFreedomZA", 
+            "statusesCount": 2852, 
+            "summary": "The official platform for Economic Freedom Fighters to champion radical economic policies in South Africa. It's for Fearless Fighters. SA Government in Waiting!", 
+            "twitterTimeZone": "Athens", 
+            "utcOffset": "10800", 
+            "verified": false
+        }, 
+        "body": "On stage @Julius_S_Malema in #JanKempdorp to inspire hope for economic emancipation #VoteEFF http://t.co/GwsbtoOGx4", 
+        "favoritesCount": 1, 
+        "generator": {
+            "displayName": "Twitter for iPad", 
+            "link": "http://twitter.com/#!/download/ipad"
+        }, 
+        "id": "tag:search.twitter.com,2005:452414431931420672", 
+        "link": "http://twitter.com/EconFreedomZA/statuses/452414431931420672", 
+        "object": {
+            "id": "object:search.twitter.com,2005:452414431931420672", 
+            "link": "http://twitter.com/EconFreedomZA/statuses/452414431931420672", 
+            "objectType": "note", 
+            "postedTime": "2014-04-05T11:56:20.000Z", 
+            "summary": "On stage @Julius_S_Malema in #JanKempdorp to inspire hope for economic emancipation #VoteEFF http://t.co/GwsbtoOGx4"
+        }, 
+        "objectType": "activity", 
+        "postedTime": "2014-04-05T11:56:20.000Z", 
+        "provider": {
+            "displayName": "Twitter", 
+            "link": "http://www.twitter.com", 
+            "objectType": "service"
+        }, 
+        "twitter_entities": {
+            "hashtags": [
+                {
+                    "indices": [
+                        29, 
+                        41
+                    ], 
+                    "text": "JanKempdorp"
+                }, 
+                {
+                    "indices": [
+                        84, 
+                        92
+                    ], 
+                    "text": "VoteEFF"
+                }
+            ], 
+            "media": [
+                {
+                    "display_url": "pic.twitter.com/GwsbtoOGx4", 
+                    "expanded_url": "http://twitter.com/EconFreedomZA/status/452414431931420672/photo/1", 
+                    "id": 452414431793016833, 
+                    "id_str": "452414431793016833", 
+                    "indices": [
+                        93, 
+                        115
+                    ], 
+                    "media_url": "http://pbs.twimg.com/media/BkdMh1pIcAE4Jj8.jpg", 
+                    "media_url_https": "https://pbs.twimg.com/media/BkdMh1pIcAE4Jj8.jpg", 
+                    "sizes": {
+                        "large": {
+                            "h": 764, 
+                            "resize": "fit", 
+                            "w": 1024
+                        }, 
+                        "medium": {
+                            "h": 447, 
+                            "resize": "fit", 
+                            "w": 599
+                        }, 
+                        "small": {
+                            "h": 253, 
+                            "resize": "fit", 
+                            "w": 340
+                        }, 
+                        "thumb": {
+                            "h": 150, 
+                            "resize": "crop", 
+                            "w": 150
+                        }
+                    }, 
+                    "type": "photo", 
+                    "url": "http://t.co/GwsbtoOGx4"
+                }
+            ], 
+            "symbols": [], 
+            "urls": [], 
+            "user_mentions": [
+                {
+                    "id": 117102398, 
+                    "id_str": "117102398", 
+                    "indices": [
+                        9, 
+                        25
+                    ], 
+                    "name": "Julius Sello Malema", 
+                    "screen_name": "Julius_S_Malema"
+                }
+            ]
+        }, 
+        "twitter_lang": "en", 
+        "verb": "post"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-04-05T12:04:55.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 4, 
+    "twitter_entities": {
+        "hashtags": [
+            {
+                "indices": [
+                    48, 
+                    60
+                ], 
+                "text": "JanKempdorp"
+            }, 
+            {
+                "indices": [
+                    103, 
+                    111
+                ], 
+                "text": "VoteEFF"
+            }
+        ], 
+        "media": [
+            {
+                "display_url": "pic.twitter.com/GwsbtoOGx4", 
+                "expanded_url": "http://twitter.com/EconFreedomZA/status/452414431931420672/photo/1", 
+                "id": 452414431793016833, 
+                "id_str": "452414431793016833", 
+                "indices": [
+                    112, 
+                    134
+                ], 
+                "media_url": "http://pbs.twimg.com/media/BkdMh1pIcAE4Jj8.jpg", 
+                "media_url_https": "https://pbs.twimg.com/media/BkdMh1pIcAE4Jj8.jpg", 
+                "sizes": {
+                    "large": {
+                        "h": 764, 
+                        "resize": "fit", 
+                        "w": 1024
+                    }, 
+                    "medium": {
+                        "h": 447, 
+                        "resize": "fit", 
+                        "w": 599
+                    }, 
+                    "small": {
+                        "h": 253, 
+                        "resize": "fit", 
+                        "w": 340
+                    }, 
+                    "thumb": {
+                        "h": 150, 
+                        "resize": "crop", 
+                        "w": 150
+                    }
+                }, 
+                "type": "photo", 
+                "url": "http://t.co/GwsbtoOGx4"
+            }
+        ], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 932163222, 
+                "id_str": "932163222", 
+                "indices": [
+                    3, 
+                    17
+                ], 
+                "name": "EconomicFreedom", 
+                "screen_name": "EconFreedomZA"
+            }, 
+            {
+                "id": 117102398, 
+                "id_str": "117102398", 
+                "indices": [
+                    28, 
+                    44
+                ], 
+                "name": "Julius Sello Malema", 
+                "screen_name": "Julius_S_Malema"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "share"
+}
+
+
+
+
+
+
+{
+    "actor": {
+        "displayName": "Paledi ", 
+        "favoritesCount": 63, 
+        "followersCount": 155, 
+        "friendsCount": 533, 
+        "id": "id:twitter.com:396667920", 
+        "image": "https://abs.twimg.com/sticky/default_profile_images/default_profile_5_normal.png", 
+        "languages": [
+            "en"
+        ], 
+        "link": "http://www.twitter.com/PalediZA", 
+        "links": [
+            {
+                "href": "http://effighters.org.za/join-us/", 
+                "rel": "me"
+            }
+        ], 
+        "listedCount": 0, 
+        "location": {
+            "displayName": " Azania", 
+            "objectType": "place"
+        }, 
+        "objectType": "person", 
+        "postedTime": "2011-10-23T16:11:34.000Z", 
+        "preferredUsername": "PalediZA", 
+        "statusesCount": 1891, 
+        "summary": "Just an African & Thinking like one | EFF Fighter | #Amakhosi4Life", 
+        "twitterTimeZone": "Pretoria", 
+        "utcOffset": "7200", 
+        "verified": false
+    }, 
+    "body": "RT @MbuyiseniNdlozi: @JacksonMthembu_ not condemning the torching of EFF tents in Tokoza is encouragement of political intolerance and a si\u2026", 
+    "favoritesCount": 0, 
+    "generator": {
+        "displayName": "Mobile Web (M2)", 
+        "link": "https://mobile.twitter.com"
+    }, 
+    "gnip": {
+        "klout_score": 43, 
+        "language": {
+            "value": "en"
+        }, 
+        "matching_rules": [
+            {
+                "tag": "umd-sme-central-accounts", 
+                "value": "from:2995663598 OR to:2995663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR from:295663598 OR to:295663598 OR from:20521828 OR to:20521828 OR from:117102398 OR to:117102398 OR from:1164129446 OR to:1164129446 OR from:1613558646 OR to:1613558646 OR from:980267875 OR to:980267875 OR @SAPresident OR @helenzille OR @Julius_S_Malema OR @MamphelaR OR @ANCParliament OR @JacksonMthembu_"
+            }
+        ]
+    }, 
+    "id": "tag:search.twitter.com,2005:452489212827566080", 
+    "link": "http://twitter.com/PalediZA/statuses/452489212827566080", 
+    "object": {
+        "actor": {
+            "displayName": " EFF SPOKESPERSON", 
+            "favoritesCount": 344, 
+            "followersCount": 11247, 
+            "friendsCount": 1522, 
+            "id": "id:twitter.com:454904118", 
+            "image": "https://pbs.twimg.com/profile_images/439806823449649152/D4oiyk9N_normal.jpeg", 
+            "languages": [
+                "en"
+            ], 
+            "link": "http://www.twitter.com/MbuyiseniNdlozi", 
+            "links": [
+                {
+                    "href": "http://www.effighters.org.za", 
+                    "rel": "me"
+                }
+            ], 
+            "listedCount": 44, 
+            "location": {
+                "displayName": "Evaton, Johannesburg", 
+                "objectType": "place"
+            }, 
+            "objectType": "person", 
+            "postedTime": "2012-01-04T14:28:42.000Z", 
+            "preferredUsername": "MbuyiseniNdlozi", 
+            "statusesCount": 2403, 
+            "summary": "Head of Communications & National Spokesperson of the @EconFreedomZA PhD Student at Wits University and supporter of @BDSSouthAfrica", 
+            "twitterTimeZone": "Pretoria", 
+            "utcOffset": "7200", 
+            "verified": false
+        }, 
+        "body": "@JacksonMthembu_ not condemning the torching of EFF tents in Tokoza is encouragement of political intolerance and a sign that u'r pleased", 
+        "favoritesCount": 1, 
+        "generator": {
+            "displayName": "Twitter for iPad", 
+            "link": "http://twitter.com/#!/download/ipad"
+        }, 
+        "id": "tag:search.twitter.com,2005:452446879163224065", 
+        "link": "http://twitter.com/MbuyiseniNdlozi/statuses/452446879163224065", 
+        "object": {
+            "id": "object:search.twitter.com,2005:452446879163224065", 
+            "link": "http://twitter.com/MbuyiseniNdlozi/statuses/452446879163224065", 
+            "objectType": "note", 
+            "postedTime": "2014-04-05T14:05:16.000Z", 
+            "summary": "@JacksonMthembu_ not condemning the torching of EFF tents in Tokoza is encouragement of political intolerance and a sign that u'r pleased"
+        }, 
+        "objectType": "activity", 
+        "postedTime": "2014-04-05T14:05:16.000Z", 
+        "provider": {
+            "displayName": "Twitter", 
+            "link": "http://www.twitter.com", 
+            "objectType": "service"
+        }, 
+        "twitter_entities": {
+            "hashtags": [], 
+            "symbols": [], 
+            "urls": [], 
+            "user_mentions": [
+                {
+                    "id": 980267875, 
+                    "id_str": "980267875", 
+                    "indices": [
+                        0, 
+                        16
+                    ], 
+                    "name": "Jackson Mthembu", 
+                    "screen_name": "JacksonMthembu_"
+                }
+            ]
+        }, 
+        "twitter_lang": "en", 
+        "verb": "post"
+    }, 
+    "objectType": "activity", 
+    "postedTime": "2014-04-05T16:53:29.000Z", 
+    "provider": {
+        "displayName": "Twitter", 
+        "link": "http://www.twitter.com", 
+        "objectType": "service"
+    }, 
+    "retweetCount": 7, 
+    "twitter_entities": {
+        "hashtags": [], 
+        "symbols": [], 
+        "urls": [], 
+        "user_mentions": [
+            {
+                "id": 454904118, 
+                "id_str": "454904118", 
+                "indices": [
+                    3, 
+                    19
+                ], 
+                "name": " EFF SPOKESPERSON", 
+                "screen_name": "MbuyiseniNdlozi"
+            }, 
+            {
+                "id": 980267875, 
+                "id_str": "980267875", 
+                "indices": [
+                    21, 
+                    37
+                ], 
+                "name": "Jackson Mthembu", 
+                "screen_name": "JacksonMthembu_"
+            }
+        ]
+    }, 
+    "twitter_filter_level": "medium", 
+    "twitter_lang": "en", 
+    "verb": "share"
+}
+
+
+
+
+
+
+Loaded 11 tweets
