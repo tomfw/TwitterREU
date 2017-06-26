@@ -269,9 +269,9 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, che
         if random.random() < sampling or (cheat and label_graph and label_graph.has_edge(n1, n2)):
             if allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag'):
                 count += 1
-                #if verbose:
-                    #if count % 1000000 == 0:
-                        #print("%d checked... %d eliminated" % (count, elim))
+                if verbose:
+                    if count % 1000000 == 0:
+                        print("%d checked... %d eliminated" % (count, elim))
                 k_s = np.mean((katz[n1], katz[n2]))
                 if k_s < min_katz:
                     elim += 1
@@ -297,8 +297,8 @@ def dataframe_from_graph(graph, pairs=True, sampling=None, label_graph=None, che
     df['spl'] = spl
     df['katz'] = katzes
 
-    #if verbose:
-        #print("%d pairs checked and %d pairs in dataframe" % (count, df.shape[0]))
+    if verbose:
+        print("%d pairs checked and %d pairs in dataframe" % (count, df.shape[0]))
 
     return df, labels
 
@@ -333,7 +333,7 @@ def dataframe_from_graph2(graph, pairs=True, sampling=None, label_graph=None, al
     for n1, n2 in iter_set:
         if random.random() < sampling:  # or (label_graph and label_graph.has_edge(n1, n2)):
             if allow_hashtags or (graph.node[n1]['type'] != 'hashtag' and graph.node[n2]['type'] != 'hashtag'):
-                if count % 150000 == 0:
+                if count % 1000000 == 0:
                     print("%d in set so far..." % count)
                 shortest = get_sp(graph, n1, n2)
                 count += 1

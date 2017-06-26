@@ -9,13 +9,13 @@ import pandas as pd
 import numpy as np
 
 # change these values to setup a test....
-n_trials = 100
+n_trials = 1
 data_directory = '/Volumes/pond/Temp/twitter/'
-out_file = 'KatzFilter_NoHashtags.csv' # don't forget to change the filename
-sample_amount = 0.005
+out_file = 'delete.csv' # don't forget to change the filename
+sample_amount = 0.01
 katz_threshold = 0.0069
-use_hashtags = False
-probability_threshold = 0.25
+use_hashtags = True
+probability_threshold = 0.01
 fields = ['katz', 'att', 'jac', 'adam', 'nbrs', 'spl']
 use_auc = False
 directed = True
@@ -24,9 +24,9 @@ second_split = datetime.datetime(2014, 5, 10)
 
 if directed:
     graph = dtg.LoadTwitterGraph(data_directory, 0, hashtags=use_hashtags)
-else:
-    graph = tg.LoadTwitterGraph(data_directory, 0, hashtags=use_hashtags)
 
+# else:
+# graph = tg.LoadTwitterGraph(data_directory, 0, hashtags=use_hashtags)
 
 
 def remove_edges_after(split, g):
@@ -66,7 +66,7 @@ while n < n_trials:
     df_test, y_test = dtg.dataframe_from_graph(g_1, pairs=False, sampling=sample_amount,
                                                label_graph=g_2, min_katz=katz_threshold, verbose=True, cheat=False, katz=kz_1)
 
-    rf = RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=2, random_state=0, n_jobs=-1)
+    rf = RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=2, random_state=0, n_jobs=-1, class_weight='balanced')
     x_train = df_train.loc[:, fields]
     x_test = df_test.loc[:, fields]
 
