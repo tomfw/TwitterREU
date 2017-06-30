@@ -24,6 +24,22 @@ class TwitterGraph(object):
         self.ht_counts = defaultdict(int)
         self.tweets = {}
         self.nx_graph = nx.Graph()
+        self.n_users = 0
+        self.userNameDict = {}
+
+    def _get_user_dict(self, country):
+        """
+        Get the user_id to graph_id dictionary for a country
+        """
+
+        filenames = ['SA_RT_UserID_Dict.csv']
+        if country > len(filenames) - 1:
+            self.display_error("_get_user_dict", "Don't have user dictionary for that country yet!")
+            return
+
+        df = pd.read_csv(filenames[country])
+        for i in range(0, df.shape[0]):
+            self.userNameDict[df.loc[i, 'twitter_id']] = df.loc[i, 'graph_id']
 
     @classmethod
     def rt_graph_from_json(cls, data_directory, country):
@@ -37,8 +53,7 @@ class TwitterGraph(object):
         mypath = data_directory + cls.filenames[country]
 
         new = cls()
-
-        userNameDict = {}
+        new._get_user_dict(country)
         timeFormat = "%Y-%m-%dT%H:%M:%S.%fZ"
 
         times = []
@@ -50,7 +65,7 @@ class TwitterGraph(object):
                 tweetObj = json.loads(line)
                 currentTime = datetime.datetime.strptime(tweetObj['postedTime'], timeFormat)
                 times.append(currentTime)
-                poster_id = cls.parse_id_string(
+                tweeter_id = cls.parse_id_string(
                     str(tweetObj['actor']['id']))  # int(re.findall('^.*:([0-9]+)$', str(tweetObj['actor']['id']))[0])
                 tweet_id = cls.parse_id_string(str(tweetObj['id']))
                 uName = tweetObj['actor']['preferredUsername']
@@ -60,36 +75,45 @@ class TwitterGraph(object):
                 if new.n_tweets > 10:
                     pass
 
-                if uName not in userNameDict:
-                    userNameDict[uName] = poster_id
+                if tweeter_id not in new.userNameDict:
+                    new.n_users += 1
+                    new.userNameDict[tweeter_id] = new.n_users
+                    user_id = new.n_users
                 else:
-                    poster_id = userNameDict[uName]
+                    user_id = new.userNameDict[tweeter_id]
 
-                if not poster_id:
+                if not user_id:
                     continue
 
-                if poster_id not in new.nx_graph:
-                    new.nx_graph.add_node(poster_id, n_tweets=1, n_mentions=0, u_name=uName, type="user")
+                if user_id not in new.nx_graph:
+                    new.nx_graph.add_node(user_id, n_tweets=1, n_mentions=0, u_name=uName, type="user")
                 else:
-                    new.nx_graph.node[poster_id]['n_tweets'] += 1
+                    new.nx_graph.node[user_id]['n_tweets'] += 1
 
                 if tweetObj['verb'] == 'share':
                     rt_id = cls.parse_id_string(str(tweetObj['object']['id']))
                     rt_user_id = cls.parse_id_string(str(tweetObj['object']['actor']['id']))
+                    if rt_user_id not in new.userNameDict:
+                        new.n_users += 1
+                        new.userNameDict[rt_user_id] = new.n_users
+                        rt_user_id = new.n_users
+                    else:
+                        rt_user_id = new.userNameDict[rt_user_id]
+
                     if rt_user_id not in new.nx_graph:
                         new.nx_graph.add_node(rt_user_id, n_tweets=1, n_mentions=1, type="user")
                     else:
                         new.nx_graph.node[rt_user_id]['n_mentions'] += 1
-                    if not new.nx_graph.has_edge(poster_id, rt_user_id):
-                        new.nx_graph.add_edge(poster_id, rt_user_id, posted=[currentTime], tweets=[tweet_id], n_links=1)
+                    if not new.nx_graph.has_edge(user_id, rt_user_id):
+                        new.nx_graph.add_edge(user_id, rt_user_id, posted=[currentTime], tweets=[tweet_id], n_links=1)
                     else:
-                        timeStamps = new.nx_graph.edge[poster_id][rt_user_id]['posted']
+                        timeStamps = new.nx_graph.edge[user_id][rt_user_id]['posted']
                         i = 0
                         while i < len(timeStamps) and timeStamps[i] > currentTime:
                             i += 1
-                        new.nx_graph.edge[poster_id][rt_user_id]['posted'].insert(i, currentTime)
-                        new.nx_graph.edge[poster_id][rt_user_id]['tweets'].insert(i, tweet_id)
-                        new.nx_graph.edge[poster_id][rt_user_id]['n_links'] += 1
+                        new.nx_graph.edge[user_id][rt_user_id]['posted'].insert(i, currentTime)
+                        new.nx_graph.edge[user_id][rt_user_id]['tweets'].insert(i, tweet_id)
+                        new.nx_graph.edge[user_id][rt_user_id]['n_links'] += 1
                     new.tweets[tweet_id]['type'] = 'rt'
                     new.tweets[tweet_id]['rt_id'] = rt_id
                     rt2_count += 1
