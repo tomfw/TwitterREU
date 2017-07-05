@@ -9,7 +9,7 @@ import random
 import math
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-
+import scipy.sparse
 
 class TwitterGraph(object):
     filenames = ['SAfrica-community-relevant-restricted.json',
@@ -26,6 +26,7 @@ class TwitterGraph(object):
         self.nx_graph = nx.Graph()
         self.n_users = 0
         self.userNameDict = {}
+        self.katz = None
 
     def _get_user_dict(self, country):
         """
@@ -40,6 +41,21 @@ class TwitterGraph(object):
         df = pd.read_csv(filenames[country])
         for i in range(0, df.shape[0]):
             self.userNameDict[df.loc[i, 'twitter_id']] = df.loc[i, 'graph_id']
+
+    def katz_for_pairs(self, pairs, adj_prefix, max_length=6, beta=0.1):
+        filenames = [adj_prefix + str(i) + '.npz' for i in range(2, max_length + 1)]
+        n = 1
+        self.katz = {}
+        for u, v in pairs:
+            if u not in self.katz:
+                self.katz[u] = defaultdict(float)
+        for f in filenames:
+            a = scipy.sparse.load_npz(f)
+            b = beta ** n
+            for u, v in pairs:
+                self.katz[u][v] += b * a[u-1, v-1]
+            n += 1
+            print("Loaded %s" % f)
 
     @classmethod
     def rt_graph_from_json(cls, data_directory, country):
@@ -444,9 +460,10 @@ class TwitterGraph(object):
         att = []
         nbrs = []
         spl = []
-        katzes = []
+        katz_centralities = []
         count = 0
         labels = []
+        katzes = []
         # degree = nx.degree(graph)
 
         if type(pairs) is bool and pairs:
@@ -483,8 +500,10 @@ class TwitterGraph(object):
                     nbrs.append(n_nbrs)
                     att.append(attachment)
                     spl.append(self.get_sp(n1, n2))
-                    katzes.append(np.mean((katz[n1], katz[n2])))
+                    katz_centralities.append(np.mean((katz[n1], katz[n2])))
                     labels.append(label_graph.nx_graph.has_edge(n1, n2))
+                    if self.katz:
+                        katzes.append(self.katz[n1][n2])
 
         df = pd.DataFrame()
         df['u'] = u
@@ -494,6 +513,7 @@ class TwitterGraph(object):
         df['nbrs'] = nbrs
         df['att'] = att
         df['spl'] = spl
+        df['katz_centrality'] = katz_centralities
         df['katz'] = katzes
 
         if verbose:
@@ -616,4 +636,4 @@ class TwitterGraph(object):
         return self.tweets[t_id]['type'] == 'rt'
 
     def display_error(self, function, message):
-        print("Error in DirectedTwitterGraph.%s:\n\t%s" % (function, message))
+        print("Error in TwitterGraph.%s:\n\t%s" % (function, message))
