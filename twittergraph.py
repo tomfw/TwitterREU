@@ -27,6 +27,19 @@ class TwitterGraph(object):
         self.n_users = 0
         self.userNameDict = {}
         self.katz = None
+        self.embeddings = None
+        self.emb_cols = []
+
+    def load_embeddings(self, f_name):
+        emb_df = pd.read_csv(f_name, sep=' ', header=None)
+        self.embeddings = {}
+        for i in range(0, emb_df.shape[0]):
+            v_emb = []
+            for j in range(1, emb_df.shape[1]):
+                if i == 0:
+                    self.emb_cols.append('dw' + str(j - 1))
+                v_emb.append(emb_df.iloc[i, j])
+            self.embeddings[emb_df.iloc[i, 0]] = v_emb
 
     def _get_user_dict(self, country):
         """
@@ -46,12 +59,14 @@ class TwitterGraph(object):
         filenames = [adj_prefix + str(i) + '.npz' for i in range(2, max_length + 1)]
         n = 1
         self.katz = {}
+        bs = [1.500, .891, .631, .543, .413, .420]
         for u, v in pairs:
             if u not in self.katz:
                 self.katz[u] = defaultdict(float)
         for f in filenames:
             a = scipy.sparse.load_npz(f)
-            b = beta ** n
+            # b = beta ** n
+            b = bs[n-1]
             for u, v in pairs:
                 self.katz[u][v] += b * a[u-1, v-1]
             n += 1
@@ -464,6 +479,10 @@ class TwitterGraph(object):
         count = 0
         labels = []
         katzes = []
+        embeddings = []
+        if self.embeddings:
+            for _ in self.emb_cols:
+                embeddings.append([])
         # degree = nx.degree(graph)
 
         if type(pairs) is bool and pairs:
@@ -504,6 +523,9 @@ class TwitterGraph(object):
                     labels.append(label_graph.nx_graph.has_edge(n1, n2))
                     if self.katz:
                         katzes.append(self.katz[n1][n2])
+                    if self.embeddings:
+                        for i in range(0, len(self.emb_cols)):
+                            embeddings[i].append(np.mean((self.embeddings[n1][i], self.embeddings[n2][i])))
 
         df = pd.DataFrame()
         df['u'] = u
@@ -514,7 +536,11 @@ class TwitterGraph(object):
         df['att'] = att
         df['spl'] = spl
         df['katz_centrality'] = katz_centralities
-        df['katz'] = katzes
+        if self.katz:
+            df['katz'] = katzes
+        if self.embeddings:
+            for i, col in enumerate(self.emb_cols):
+                df[col] = embeddings[i]
 
         if verbose:
             print("%d pairs checked and %d pairs in dataframe" % (count, df.shape[0]))
