@@ -1,15 +1,20 @@
-import networkx as nx
-import json
-import re
 import datetime
-from collections import defaultdict
-import numpy as np
-from itertools import chain
-import random
+import json
 import math
+import os
+import random
+import re
+from collections import defaultdict
+from itertools import chain
+
+import networkx as nx
+import numpy as np
 import pandas as pd
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import scipy.sparse
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
+from node2vec import Graph
+
 
 class TwitterGraph(object):
     filenames = ['SAfrica-community-relevant-restricted.json',
@@ -18,7 +23,7 @@ class TwitterGraph(object):
 
     def __init__(self):
         """
-        Create and empty twitter graph.
+        Create an empty twitter graph.
         """
         self.n_tweets = 0
         self.ht_counts = defaultdict(int)
@@ -29,17 +34,141 @@ class TwitterGraph(object):
         self.katz = None
         self.embeddings = None
         self.emb_cols = []
+        self.min_date = self.max_date = None
+        self.walks = None
 
-    def load_embeddings(self, f_name):
-        emb_df = pd.read_csv(f_name, sep=' ', header=None)
-        self.embeddings = {}
-        for i in range(0, emb_df.shape[0]):
-            v_emb = []
-            for j in range(1, emb_df.shape[1]):
-                if i == 0:
-                    self.emb_cols.append('dw' + str(j - 1))
-                v_emb.append(emb_df.iloc[i, j])
-            self.embeddings[emb_df.iloc[i, 0]] = v_emb
+    def perform_walks(self, n_walks=10, walk_length=50, p=1, q=1):
+        n2v = Graph(self.nx_graph, is_directed=False, p=p, q=q)
+        n2v.preprocess_transition_probs()
+        self.walks = n2v.simulate_walks(n_walks, walk_length)
+
+    def load_embeddings(self, f_name, dims=128):
+        emb_df = pd.read_csv(f_name, sep=' ', skiprows=1, header=None, index_col=None)
+        if not self.embeddings:
+            self.embeddings = {}
+        for i in range(1, emb_df.shape[0]):
+            if i % 10000 == 1:
+                print("Loaded: %d" % i)
+            self.embeddings[int(emb_df.iloc[i, 0])] = emb_df.iloc[i, 1: dims+1].tolist()
+        self.make_emb_cols(dims)
+        print("Loaded embeddings. Dimensions: (%d, %d)" % (len(self.embeddings), dims))
+
+    def save_embeddings(self, f_name, dim):
+        out_file = open(f_name, 'w')
+        if not self.embeddings:
+            print("No embeddings to save!")
+            return
+        out_file.write("%s %s%s" % (len(self.embeddings), dim, os.linesep))
+        for node, embedding in self.embeddings.items():
+            out_file.write("%s " % node)
+            d = 0
+            for x in embedding:
+                out_file.write("%s " % str(x))
+                d += 1
+                if d < dim:
+                    out_file.write(" ")
+            out_file.write(os.linesep)
+        out_file.flush()
+        out_file.close()
+
+    def make_emb_cols(self, dims):
+        self.emb_cols = []
+        for j in range(1, dims + 1):
+            self.emb_cols.append('dw' + str(j - 1))
+
+    def generate_embeddings_with_prev(self, old_emb, dims):
+        self.embeddings = old_emb
+        for node in self.nx_graph.nodes_iter():
+            if self.nx_graph.degree(node) == 0:
+                continue
+            if node not in self.embeddings:
+                nbr_vecs = []
+                for nbr in self.nx_graph.neighbors(node):
+                    if nbr in self.embeddings:
+                        nbr_vecs.append(self.embeddings[nbr])
+
+                if len(nbr_vecs):
+                    self.embeddings[node] = np.mean(nbr_vecs, axis=0)
+                else:
+                    self.embeddings[node] = self._rand_vec(dims)
+
+    @staticmethod
+    def _rand_vec(dims):
+        return [(random.random() * 2 - 1) for _ in range(0, dims)]
+
+    def save_edgelist(self, f_name):
+        el = open(f_name, 'w')
+        for u, v, data in self.nx_graph.edges_iter(data=True):
+            el.write("%s %s %s %s" % (u, v, data['weight'], os.linesep))
+            el.write("%s %s %s %s" % (v, u, data['weight'], os.linesep))
+        el.flush()
+        el.close()
+
+    def save_walks(self, f_name):
+        w_file = open(f_name, 'w')
+        if not self.walks:
+            print("No walks exist.\nYou must run perform_walks() first!")
+            return
+        for walk in self.walks:
+            w_len = len(walk)
+            for i, node in enumerate(walk):
+                w_file.write("%s" % node)
+                if i < (w_len - 1):
+                    w_file.write(" ")
+            w_file.write("%s" % os.linesep)
+        w_file.flush()
+        w_file.close()
+
+    def subgraph_within_dates(self, start_date, end_date):
+        """
+        Get a subgraph of this graph by removing edges outside of time interval
+        """
+        new = TwitterGraph.tg_with_tg(self)
+        for u, v in self.nx_graph.edges_iter():
+            edge = new.nx_graph.edge[u][v]
+            done = False
+            while len(edge['posted']) and not done:
+                top = bottom = False
+                if edge['posted'][0] > end_date:
+                    edge['posted'].pop(0)
+                    edge['tweets'].pop(0)
+                else:
+                    top = True
+
+                if len(edge['posted']) and edge['posted'][-1] < start_date:
+                    edge['posted'].pop(-1)
+                    edge['tweets'].pop(-1)
+                else:
+                    bottom = True
+
+                done = top and bottom
+
+            if not len(edge['posted']):
+                new.nx_graph.remove_edge(u, v)
+        new.max_date = end_date
+        new.min_date = start_date
+        return new
+
+    def subgraphs_of_length(self, days):
+        """
+        Get all temporal subgraphs of 'days' length
+        """
+        graphs = []
+        sg_length = datetime.timedelta(days=days)
+        start_date = self.min_date
+        end_date = start_date + sg_length
+        done = False
+        while not done:
+            if start_date > self.max_date:
+                break
+            if end_date > self.max_date:
+                end_date = self.max_date
+                done = True
+            graphs.append(self.subgraph_within_dates(start_date, end_date))
+            start_date += sg_length
+            end_date += sg_length
+        return graphs
+
 
     def _get_user_dict(self, country):
         """
@@ -113,6 +242,8 @@ class TwitterGraph(object):
                 else:
                     user_id = new.userNameDict[tweeter_id]
 
+                new.tweets[tweet_id]['poster'] = user_id
+
                 if not user_id:
                     continue
 
@@ -122,8 +253,8 @@ class TwitterGraph(object):
                     new.nx_graph.node[user_id]['n_tweets'] += 1
 
                 if tweetObj['verb'] == 'share':
-                    rt_id = cls.parse_id_string(str(tweetObj['object']['id']))
-                    rt_user_id = cls.parse_id_string(str(tweetObj['object']['actor']['id']))
+                    rt_id = cls.parse_id_string(str(tweetObj['object']['id'])) # id of the original tweet
+                    rt_user_id = cls.parse_id_string(str(tweetObj['object']['actor']['id'])) # id of the original tweeter
                     if rt_user_id not in new.userNameDict:
                         new.n_users += 1
                         new.userNameDict[rt_user_id] = new.n_users
@@ -136,7 +267,7 @@ class TwitterGraph(object):
                     else:
                         new.nx_graph.node[rt_user_id]['n_mentions'] += 1
                     if not new.nx_graph.has_edge(user_id, rt_user_id):
-                        new.nx_graph.add_edge(user_id, rt_user_id, posted=[currentTime], tweets=[tweet_id], n_links=1)
+                        new.nx_graph.add_edge(user_id, rt_user_id, posted=[currentTime], tweets=[tweet_id], n_links=1, weight=1)
                     else:
                         timeStamps = new.nx_graph.edge[user_id][rt_user_id]['posted']
                         i = 0
@@ -176,7 +307,6 @@ class TwitterGraph(object):
         Create a new directed twitter graph by removing edges from a directed twitter graph.
 
         :param tg: The original graph
-        :type tg: twittergraph
         :param date: The date past which all edges should be removed.
         :return: A new graph with all edges later than date removed
         """
@@ -185,12 +315,16 @@ class TwitterGraph(object):
             for i in range(0, len(new.nx_graph.edge[u][v]['posted'])):
                 if new.nx_graph.edge[u][v]['posted'][0] > date:
                     new.nx_graph.edge[u][v]['posted'].pop(0)
-                    new.nx_graph.edge[u][v]['tweets'].pop(0)
+                    t_id = new.nx_graph.edge[u][v]['tweets'].pop(0)
                     new.n_tweets -= 1
                     if not new.nx_graph.node[u]['type'] == 'hashtag' and not new.nx_graph.node[v]['type'] == 'hashtag':
                         new.nx_graph.edge[u][v]['n_links'] -= 1
-                        new.nx_graph.node[u]['n_tweets'] -= 1
-                        new.nx_graph.node[v]['n_mentions'] -= 1
+                        if new.tweet_poster(t_id) == u:
+                            new.nx_graph.node[u]['n_tweets'] -= 1
+                            new.nx_graph.node[v]['n_mentions'] -= 1
+                        else:
+                            new.nx_graph.node[v]['n_tweets'] -= 1
+                            new.nx_graph.node[u]['n_mentions'] -= 1
                     else:
                         if new.nx_graph.node[u]['type'] == 'hashtag':
                             new.nx_graph.node[u]['n_uses'] -= 1
@@ -388,68 +522,6 @@ class TwitterGraph(object):
         attachment = len(u_adj) * len(v_adj)
         return jac, adam, n_nbrs, attachment
 
-    def to_dataframe_for_pairs(self, pairs_file, sampling=None, label_graph=None):
-        """
-        Get a dataframe for training or testing from a graph by providing a csv of candidate pairs.
-
-        :param pairs_file: The path to a CSV contain u, v columns having nodes to consider
-        :param sampling: Amount to consider, default=None (do not sample)
-        :param label_graph: Graph to check for the true labels
-        :return: A pandas dataframe with columns for computed features
-        """
-        pairs = pd.read_csv(pairs_file)
-        if not sampling:
-            sampling = 2
-        if not label_graph:
-            self.display_error("to_dataframe_for_pairs", "you must provide a label_graph now")
-            return
-
-        u_list = []
-        v_list = []
-        jac_co = []
-        adam = []
-        att = []
-        nbrs = []
-        spl = []
-        katz_u = []
-        katz_v = []
-        count = 0
-        labels = []
-
-        katz = nx.katz_centrality(self.nx_graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
-
-        for u, v in zip(pairs.u, pairs.v):
-            if u not in self.nx_graph or v not in self.nx_graph:
-                continue
-            if random.random() < sampling:
-                u_list.append(u)
-                v_list.append(v)
-                katz_u.append(katz[u])
-                katz_v.append(katz[v])
-
-                (jaccard, adamic, n_nbrs, attachment) = self.get_unsupported(u, v)
-                jac_co.append(jaccard)
-                adam.append(adamic)
-                nbrs.append(n_nbrs)
-                att.append(attachment)
-                spl.append(self.get_sp(u, v))
-                labels.append(label_graph.nx_graph.has_edge(u, v))
-        df = pd.DataFrame()
-        df['u'] = u_list
-        df['v'] = v_list
-        df['jac'] = jac_co
-        df['adam'] = adam
-        df['nbrs'] = nbrs
-        df['att'] = att
-        df['spl'] = spl
-        df['katz_u'] = katz_u
-        df['katz_v'] = katz_v
-
-        print("Dataframe size: %d" % df.shape[0])
-        print("%d labeled edges" % np.sum(labels))
-
-        return df, labels
-
     def to_dataframe(self, pairs=False, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_katz=0, verbose=True, katz=None):
         """
         Get a dataframe for pairs of nodes in the graph
@@ -524,6 +596,8 @@ class TwitterGraph(object):
                     if self.katz:
                         katzes.append(self.katz[n1][n2])
                     if self.embeddings:
+                        if n1 == 0 or n2 == 0:
+                            print("A zero!")
                         for i in range(0, len(self.emb_cols)):
                             embeddings[i].append(np.mean((self.embeddings[n1][i], self.embeddings[n2][i])))
 
@@ -561,7 +635,7 @@ class TwitterGraph(object):
             results = 0
         return results
 
-    def make_pairs_with_edges(self, label_graph, target_positive_ratio=.5):
+    def make_pairs_with_edges(self, label_graph, target_positive_ratio=.5, enforce_non_edge=True, enforce_has_embeddings=False):
         """
         Generate a dataframe with a fixed ratio of positives to negatives by requiring all new edges in
         label_graph to appear in the dataframe.
@@ -575,7 +649,13 @@ class TwitterGraph(object):
         pairs_dict = defaultdict(bool)
         edges = 0
         for u, v in label_graph.nx_graph.edges_iter():
-            if not self.nx_graph.has_edge(u, v):
+            if enforce_has_embeddings and not self.embeddings:
+                print("No embeddings found! Error!")
+                return
+            if enforce_has_embeddings:
+                if u not in self.embeddings or v not in self.embeddings:
+                    continue
+            if (enforce_non_edge and not self.nx_graph.has_edge(u, v)) or not enforce_non_edge:
                 u, v = sorted((u, v))
                 if not pairs_dict[(u, v)]:
                     pairs_dict[(u, v)] = True
@@ -584,6 +664,9 @@ class TwitterGraph(object):
 
         for u, v in nx.non_edges(self.nx_graph):
             if random.random() < .05:
+                if enforce_has_embeddings:
+                    if u not in self.embeddings or v not in self.embeddings:
+                        continue
                 (u, v) = sorted((u, v))
                 if not pairs_dict[(u, v)]:
                     pairs_dict[(u, v)] = True
@@ -651,6 +734,9 @@ class TwitterGraph(object):
         :return: True if the node is a hashtag
         """
         return self.nx_graph.node[node]['type'] == 'hashtag'
+
+    def tweet_poster(self, t_id):
+        return self.tweets[t_id]['poster']
 
     def is_retweet(self, t_id):
         """
