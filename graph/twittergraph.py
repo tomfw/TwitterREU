@@ -59,7 +59,7 @@ class TwitterGraph(Graph):
         mypath = data_directory + cls.filenames[country]
 
         new = cls()
-        new._get_user_dict(country)
+        # new._get_user_dict(country)
         timeFormat = "%Y-%m-%dT%H:%M:%S.%fZ"
 
         times = []

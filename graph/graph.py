@@ -315,17 +315,25 @@ class Graph(object):
                     pairs.append((u, v))
                     edges += 1
 
-        for u, v in nx.non_edges(self.nx_graph):
-            if random.random() < .05:
-                if enforce_has_embeddings:
-                    if u not in self.embeddings or v not in self.embeddings:
-                        continue
-                (u, v) = sorted((u, v))
-                if not pairs_dict[(u, v)]:
-                    pairs_dict[(u, v)] = True
-                    pairs.append((u, v))
-            if float(edges) / len(pairs) < target_positive_ratio:
-                break
+        nodes = self.embeddings.keys()
+        added = 0
+        rejected = 0
+        while float(edges) / len(pairs) > target_positive_ratio:
+            u = nodes[int(random.random() * len(nodes))]
+            v = nodes[int(random.random() * len(nodes))]
+            if label_graph.nx_graph.has_edge(u, v) or u == v:
+                rejected += 1
+                continue
+            if enforce_has_embeddings:
+                if u not in self.embeddings or v not in self.embeddings:
+                    print("Didn't have an embedding?")
+                    rejected += 1
+                    continue
+            (u, v) = sorted((u, v))
+            if not pairs_dict[(u, v)]:
+                pairs_dict[(u, v)] = True
+                pairs.append((u, v))
+                added += 1
 
         print("\tFound %d new edges out of %d total pairs" % (edges, len(pairs)))
         return pairs
@@ -407,7 +415,7 @@ class Graph(object):
                         if n1 == 0 or n2 == 0:
                             print("A zero!")
                         for i in range(0, len(self.emb_cols)):
-                            embeddings[i].append(np.mean((self.embeddings[n1][i], self.embeddings[n2][i])))
+                           embeddings[i].append(np.mean((self.embeddings[n1][i], self.embeddings[n2][i])))
 
         df = pd.DataFrame()
         df['u'] = u
