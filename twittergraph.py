@@ -71,6 +71,22 @@ class TwitterGraph(object):
         out_file.flush()
         out_file.close()
 
+    def save_betas(self, f_name, degree_graph=None):
+        beta_file = open(f_name, 'w')
+        n_betas = 0
+        for node in self.nx_graph.nodes_iter():
+            if self.nx_graph.degree(node) > 0:
+                n_betas += 1
+        beta_file.write("%s%s" % (n_betas, os.linesep))
+        for node in self.nx_graph.nodes_iter():
+            if self.nx_graph.degree(node) > 0:
+                beta = .8
+                # if degree_graph:
+                #    beta = .8 - (.7 / degree_graph.degree(node))
+                beta_file.write("%s %f%s" % (node, beta, os.linesep))
+        beta_file.flush()
+        beta_file.close()
+
     def make_emb_cols(self, dims):
         self.emb_cols = []
         for j in range(1, dims + 1):
