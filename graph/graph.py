@@ -20,6 +20,7 @@ class Graph(object):
         self.emb_cols = []
         self.min_date = self.max_date = None
         self.walks = None
+        self.dates = False
 
     def load_embeddings(self, f_name, dims=128):
         """
@@ -28,10 +29,14 @@ class Graph(object):
         emb_df = pd.read_csv(f_name, sep=' ', skiprows=1, header=None, index_col=None)
         if not self.embeddings:
             self.embeddings = {}
-        for i in range(1, emb_df.shape[0]):
-            self.embeddings[int(emb_df.iloc[i, 0])] = emb_df.iloc[i, 1: dims + 1].tolist()
+        for i in range(0, emb_df.shape[0]):
+            key = emb_df.iloc[i, 0]
+            if str(key) in '</s>':
+                continue
+            emb = np.array(emb_df.iloc[i, 1: dims + 1].tolist())
+            emb = emb.astype(float)
+            self.embeddings[int(key)] = emb
         self.make_emb_cols(dims)
-        print("\tLoaded embeddings. Dimensions: (%d, %d)" % (len(self.embeddings), dims))
 
     def save_embeddings(self, f_name, dim):
         """
@@ -153,7 +158,7 @@ class Graph(object):
             done = False
             while len(edge['timestamps']) and not done:
                 top = bottom = False
-                if edge['timestamps'][0] > end_date:
+                if edge['timestamps'][0] >= end_date:
                     edge['timestamps'].pop(0)
                 else:
                     top = True
@@ -168,16 +173,30 @@ class Graph(object):
             if not len(edge['timestamps']):
                 new.nx_graph.remove_edge(u, v)
 
+        # min = 100000000
+        # max = -100000000
+        # for u,v, data in new.nx_graph.edges_iter(data=True):
+        #     for time in data['timestamps']:
+        #         if time < min:
+        #             min = time
+        #         elif time > max:
+        #             max = time
+
         new.max_date = end_date
         new.min_date = start_date
         return new
 
-    def subgraphs_of_length(self, days):
+    def subgraphs_of_length(self, days=None, periods=None):
         """
         Get all temporal subgraphs of 'days' length
+        Use 'periods' when graph pre split into numbered time periods
         """
         graphs = []
-        sg_length = datetime.timedelta(days=days)
+        if days:
+            sg_length = datetime.timedelta(days=days)
+        else:
+            sg_length = periods
+
         start_date = self.min_date
         end_date = start_date + sg_length
         done = False
@@ -185,9 +204,12 @@ class Graph(object):
             if start_date > self.max_date:
                 break
             if end_date > self.max_date:
-                end_date = self.max_date
+                # end_date = self.max_date
                 done = True
-            graphs.append(self.subgraph_within_dates(start_date, end_date))
+            print(start_date, end_date)
+            new = self.subgraph_within_dates(start_date, end_date)
+            if new.nx_graph.number_of_edges():
+                graphs.append(new)
             start_date += sg_length
             end_date += sg_length
         return graphs
@@ -326,7 +348,6 @@ class Graph(object):
                 continue
             if enforce_has_embeddings:
                 if u not in self.embeddings or v not in self.embeddings:
-                    print("Didn't have an embedding?")
                     rejected += 1
                     continue
             (u, v) = sorted((u, v))
@@ -334,8 +355,7 @@ class Graph(object):
                 pairs_dict[(u, v)] = True
                 pairs.append((u, v))
                 added += 1
-
-        print("\tFound %d new edges out of %d total pairs" % (edges, len(pairs)))
+        print("Rejected %d nodes." % rejected)
         return pairs
 
     def to_dataframe(self, pairs=False, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_katz=0, verbose=True, katz=None):
@@ -358,15 +378,15 @@ class Graph(object):
         u = []
         v = []
         has_links = []
-        #jac_co = []
-        #adam = []
-        #att = []
-        #nbrs = []
-        #spl = []
-        #katz_centralities = []
+        jac_co = []
+        adam = []
+        att = []
+        nbrs = []
+        spl = []
+        katz_centralities = []
         count = 0
         labels = []
-        #katzes = []
+        katzes = []
         embeddings = []
         if self.embeddings:
             for _ in self.emb_cols:
@@ -379,60 +399,58 @@ class Graph(object):
             iter_set = nx.non_edges(self.nx_graph)
         else:
             iter_set = pairs
-            print("\tUsing the pairs you provided...")
-        #
-        # if verbose and not katz:
-        #     print("Precomputing katzes....")
-        #
-        # if not katz:
-        #     katz = nx.katz_centrality(self.nx_graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
+
+        if verbose and not katz:
+            print("Precomputing katzes....")
+
+        if not katz:
+            katz = nx.katz_centrality(self.nx_graph, alpha=.005, beta=.1, tol=.00000001, max_iter=5000)
 
         elim = 0
         for n1, n2 in iter_set:
-            #if random.random() < sampling or (cheat and label_graph and label_graph.nx_graph.has_edge(n1, n2)):
-                #if allow_hashtags or (self.nx_graph.node[n1]['type'] != 'hashtag' and self.nx_graph.node[n2]['type'] != 'hashtag'):
-                    count += 1
-                    #if verbose:
-                    #    if count % 1000000 == 0:
-                    #        print("%d checked... %d eliminated" % (count, elim))
-                    # k_s = np.mean((katz[n1], katz[n2]))
-                    #if k_s < min_katz:
-                    #    elim += 1
-                    #    continue
-                    u.append(n1)
-                    v.append(n2)
-                    #(jaccard, adamic, n_nbrs, attachment) = self.get_unsupported(n1, n2)
-                    #jac_co.append(jaccard)
-                    #adam.append(adamic)
-                    #nbrs.append(n_nbrs)
-                    #att.append(attachment)
-                    #spl.append(self.get_sp(n1, n2))
-                    #katz_centralities.append(np.mean((katz[n1], katz[n2])))
-                    labels.append(label_graph.nx_graph.has_edge(n1, n2))
-                    #if self.katz:
-                    #    katzes.append(self.katz[n1][n2])
-                    if self.embeddings:
-                        if n1 == 0 or n2 == 0:
-                            print("A zero!")
-                        for i in range(0, len(self.emb_cols)):
-                           embeddings[i].append(np.mean((self.embeddings[n1][i], self.embeddings[n2][i])))
+            if random.random() < sampling or (cheat and label_graph and label_graph.nx_graph.has_edge(n1, n2)):
+                count += 1
+                #if verbose:
+                #    if count % 1000000 == 0:
+                #        print("%d checked... %d eliminated" % (count, elim))
+                # k_s = np.mean((katz[n1], katz[n2]))
+                #if k_s < min_katz:
+                #    elim += 1
+                #    continue
+                u.append(n1)
+                v.append(n2)
+                (jaccard, adamic, n_nbrs, attachment) = self.get_unsupported(n1, n2)
+                jac_co.append(jaccard)
+                adam.append(adamic)
+                nbrs.append(n_nbrs)
+                att.append(attachment)
+                spl.append(self.get_sp(n1, n2))
+                katz_centralities.append(np.mean((katz[n1], katz[n2])))
+                labels.append(label_graph.nx_graph.has_edge(n1, n2))
+                #if self.katz:
+                #    katzes.append(self.katz[n1][n2])
+                if self.embeddings:
+                    for i in range(0, len(self.emb_cols)):
+                       embeddings[i].append(np.mean((self.embeddings[n1][i], self.embeddings[n2][i])))
+                    # embeddings[i].append((self.embeddings[n1][i] * self.embeddings[n2][i]))
+
 
         df = pd.DataFrame()
         df['u'] = u
         df['v'] = v
-        # df['jac'] = jac_co
-        # df['adam'] = adam
-        # df['nbrs'] = nbrs
-        # df['att'] = att
-        # df['spl'] = spl
-        # df['katz_centrality'] = katz_centralities
-        # if self.katz:
-        #     df['katz'] = katzes
+        df['jac'] = jac_co
+        df['adam'] = adam
+        df['nbrs'] = nbrs
+        df['att'] = att
+        df['spl'] = spl
+        df['katz_centrality'] = katz_centralities
+        if self.katz:
+            df['katz'] = katzes
         if self.embeddings:
             for i, col in enumerate(self.emb_cols):
                 df[col] = embeddings[i]
 
         if verbose:
             print("\t%d pairs checked and %d pairs in dataframe" % (count, df.shape[0]))
-
+        df.sample(frac=1)
         return df, labels

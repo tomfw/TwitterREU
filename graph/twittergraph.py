@@ -32,6 +32,7 @@ class TwitterGraph(Graph):
         self.tweets = {}
         self.n_users = 0
         self.userNameDict = {}
+        self.dates = True
 
     def _get_user_dict(self, country):
         """
@@ -99,8 +100,8 @@ class TwitterGraph(Graph):
                     new.nx_graph.node[user_id]['n_tweets'] += 1
 
                 if tweetObj['verb'] == 'share':
-                    rt_id = cls.parse_id_string(str(tweetObj['object']['id'])) # id of the original tweet
-                    rt_user_id = cls.parse_id_string(str(tweetObj['object']['actor']['id'])) # id of the original tweeter
+                    rt_id = cls.parse_id_string(str(tweetObj['object']['id']))  # id of the original tweet
+                    rt_user_id = cls.parse_id_string(str(tweetObj['object']['actor']['id']))  # id of the original tweeter
                     if rt_user_id not in new.userNameDict:
                         new.n_users += 1
                         new.userNameDict[rt_user_id] = new.n_users
@@ -113,7 +114,7 @@ class TwitterGraph(Graph):
                     else:
                         new.nx_graph.node[rt_user_id]['n_mentions'] += 1
                     if not new.nx_graph.has_edge(user_id, rt_user_id):
-                        new.nx_graph.add_edge(user_id, rt_user_id, timestamps=[currentTime], tweets=[tweet_id], n_links=1, weight=1)
+                        new.nx_graph.add_edge(user_id, rt_user_id, timestamps=[currentTime],tweets=[tweet_id], n_links=1, weight=1)
                     else:
                         timeStamps = new.nx_graph.edge[user_id][rt_user_id]['timestamps']
                         i = 0

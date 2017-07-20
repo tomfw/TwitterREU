@@ -1,3 +1,5 @@
 .DS_Store
 .idea
 *.pyc
+word2vec/retrofit_word2vec_one
+word2vec/word2vec
