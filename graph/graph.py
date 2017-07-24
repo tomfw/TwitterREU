@@ -323,6 +323,24 @@ class Graph(object):
         pairs = []
         pairs_dict = defaultdict(bool)
         edges = 0
+
+        if target_positive_ratio == 0:
+            # We want all the pairs from label_graph
+            # todo: do we need pairs_dict for this part
+            for u, v in label_graph.nx_graph.edges_iter():
+                if enforce_has_embeddings:
+                    if u not in self.embeddings or v not in self.embeddings:
+                        continue
+                edges += 1
+                pairs.append((u, v))
+            for u, v in nx.non_edges(label_graph.nx_graph):
+                if enforce_has_embeddings:
+                    if u not in self.embeddings or v not in self.embeddings:
+                        continue
+                pairs.append((u, v))
+            print("\t%d edges out of %d pairs" % (edges, len(pairs)))
+            return pairs
+
         for u, v in label_graph.nx_graph.edges_iter():
             if enforce_has_embeddings and not self.embeddings:
                 print("No embeddings found! Error!")
@@ -355,7 +373,6 @@ class Graph(object):
                 pairs_dict[(u, v)] = True
                 pairs.append((u, v))
                 added += 1
-        print("Rejected %d nodes." % rejected)
         return pairs
 
     def to_dataframe(self, pairs=False, sampling=None, label_graph=None, cheat=False, allow_hashtags=False, min_katz=0, verbose=True, katz=None):
@@ -410,22 +427,22 @@ class Graph(object):
         for n1, n2 in iter_set:
             if random.random() < sampling or (cheat and label_graph and label_graph.nx_graph.has_edge(n1, n2)):
                 count += 1
-                #if verbose:
-                #    if count % 1000000 == 0:
-                #        print("%d checked... %d eliminated" % (count, elim))
+                if verbose:
+                   if count % 10000 == 0:
+                       print("%d checked... " % count)
                 # k_s = np.mean((katz[n1], katz[n2]))
                 #if k_s < min_katz:
                 #    elim += 1
                 #    continue
                 u.append(n1)
                 v.append(n2)
-                (jaccard, adamic, n_nbrs, attachment) = self.get_unsupported(n1, n2)
-                jac_co.append(jaccard)
-                adam.append(adamic)
-                nbrs.append(n_nbrs)
-                att.append(attachment)
-                spl.append(self.get_sp(n1, n2))
-                katz_centralities.append(np.mean((katz[n1], katz[n2])))
+                # (jaccard, adamic, n_nbrs, attachment) = self.get_unsupported(n1, n2)
+                # jac_co.append(jaccard)
+                # adam.append(adamic)
+                # nbrs.append(n_nbrs)
+                # att.append(attachment)
+                # spl.append(self.get_sp(n1, n2))
+                # katz_centralities.append(np.mean((katz[n1], katz[n2])))
                 labels.append(label_graph.nx_graph.has_edge(n1, n2))
                 #if self.katz:
                 #    katzes.append(self.katz[n1][n2])
@@ -438,14 +455,14 @@ class Graph(object):
         df = pd.DataFrame()
         df['u'] = u
         df['v'] = v
-        df['jac'] = jac_co
-        df['adam'] = adam
-        df['nbrs'] = nbrs
-        df['att'] = att
-        df['spl'] = spl
-        df['katz_centrality'] = katz_centralities
-        if self.katz:
-            df['katz'] = katzes
+        # df['jac'] = jac_co
+        # df['adam'] = adam
+        # df['nbrs'] = nbrs
+        # df['att'] = att
+        # df['spl'] = spl
+        # df['katz_centrality'] = katz_centralities
+        # if self.katz:
+        #     df['katz'] = katzes
         if self.embeddings:
             for i, col in enumerate(self.emb_cols):
                 df[col] = embeddings[i]
@@ -453,4 +470,18 @@ class Graph(object):
         if verbose:
             print("\t%d pairs checked and %d pairs in dataframe" % (count, df.shape[0]))
         df.sample(frac=1)
+        return df, labels
+
+    def to_embedding_dataframe(self, pairs, label_graph):
+        cols = [c for c in self.emb_cols]
+        data = []
+        labels = []
+        for u, v in pairs:
+            labels.append(label_graph.nx_graph.has_edge(u, v))
+            if len(self.embeddings[u]) != len(self.embeddings[u]):
+                print("len error...")
+                print self.embeddings[u]
+                print self.embeddings[v]
+            data.append(np.mean((self.embeddings[u], self.embeddings[v]), axis=0))
+        df = pd.DataFrame(data, columns=cols)
         return df, labels

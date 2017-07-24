@@ -8,7 +8,7 @@ import pandas as pd
 import subprocess
 from sklearn.metrics import roc_auc_score, average_precision_score
 from sklearn.ensemble import RandomForestClassifier
-
+import time
 
 class TestMachine(object):
     def __init__(self, data_root, exe_root, output_file):
@@ -27,6 +27,8 @@ class TestMachine(object):
         self.n2v_path = exe_root + 'node2vec'
         self.rf_path = exe_root + 'retrofit_word2vec_one'
         self.output_file = output_file
+        self.times = []
+        self.iters = 0
         self.output_frame = pd.DataFrame(columns=['data',
                                                   'alpha',
                                                   'beta',
@@ -61,11 +63,19 @@ class TestMachine(object):
         return graph
 
     def run_tests(self, tests):
+        self.iters = 0
+        start = time.clock()
         for i, test in enumerate(tests):
             print("Running test %d/%d on %s" % (i+1, len(tests), test['data']))
             result = self.run_test(test)
             if not result:
                 print("Error running test: %d" % (i + 1))
+        end = time.clock()
+        t_time = end - start
+
+        print("\n\n\nCompleted %d tests in %.4f seconds" % (len(tests), t_time))
+        print("Average time/test: %.4f" % (t_time / len(tests)))
+        print("Average time/iteration: %.4f" % (t_time / self.iters))
 
     def run_test(self, test):
         if not self.last_data or not self.graph or test['data'] not in self.last_data:
@@ -95,7 +105,6 @@ class TestMachine(object):
         elif tp[0] < 1 or testp[0] < 1:
             print("Error train or test less than 1!")
             return False
-
         self._run_test(graph, sgs, test)
         return True
     
@@ -114,6 +123,7 @@ class TestMachine(object):
         edge_file = data_folder + 'e_list.txt'
 
         dims = test['dims']
+        print("Dims: %d" % dims)
         tr_len = test['train'][1] - test['train'][0]
         te_len = test['test'][1] - test['test'][0]
         v_len = test['valid'][1] - test['valid'][0]
@@ -141,15 +151,20 @@ class TestMachine(object):
         y_valid = None
         y_test = None
         for i, sg in enumerate(sgs):
+            self.iters += 1
             cum = graph.subgraph_within_dates(sgs[0].min_date, sg.max_date).nx_graph
             sg.save_edgelist(edge_file)
             if i == 0:
                 # todo: does line have a window_size?
+                init_graph = graph.subgraph_within_dates(sg.min_date, sgs[test['train'][0]].min_date)
+                print("Initial graph: ")
+                print(init_graph.min_date, init_graph.max_date)
+                init_graph.save_edgelist(edge_file)
                 self.run_command(self.line_command(edge_file,
                                                    output=embed_file,
-                                                   size=test['dims'],
+                                                   size=dims,
                                                    negative=test['negative']))
-                sg.load_embeddings(embed_file)
+                sg.load_embeddings(embed_file, dims)
                 sg.save_embeddings(init_file, dims)
                 self.prev_embeds = self.store_core_embeds(sg.embeddings)
             else:
@@ -162,8 +177,9 @@ class TestMachine(object):
                     train_graph.emb_cols = prev.emb_cols
                     train_pairs = prev.make_pairs_with_edges(train_graph, test['ratio'], enforce_non_edge=False,
                                                              enforce_has_embeddings=True)
-                    df_train, y_train = prev.to_dataframe(pairs=train_pairs, label_graph=train_graph, verbose=False)
-                    rf = RandomForestClassifier(n_estimators=500, max_depth=None, min_samples_split=2, random_state=0,
+                    #df_train, y_train = prev.to_dataframe(pairs=train_pairs, label_graph=train_graph, verbose=False)
+                    df_train, y_train = prev.to_embedding_dataframe(train_pairs, train_graph)
+                    rf = RandomForestClassifier(n_estimators=1000, max_depth=None, min_samples_split=2, random_state=0,
                                                 n_jobs=-1)
                     fields = prev.emb_cols
                     x_train = df_train.loc[:, fields]
@@ -185,19 +201,20 @@ class TestMachine(object):
                     # print(sg.min_date, sgs[i + te_len].max_date)
                     test_graph.embeddings = prev.embeddings
                     test_graph.emb_cols = prev.emb_cols
-                    test_pairs = prev.make_pairs_with_edges(test_graph, test['ratio'], enforce_non_edge=False,
+                    test_pairs = prev.make_pairs_with_edges(test_graph, 0, enforce_non_edge=False,
                                                             enforce_has_embeddings=True)
-                    df_test, y_test = prev.to_dataframe(test_pairs, label_graph=test_graph, verbose=False)
+                    #df_test, y_test = prev.to_dataframe(test_pairs, label_graph=test_graph, verbose=True)
+                    df_test, y_test = prev.to_embedding_dataframe(test_pairs, test_graph)
                     fields = prev.emb_cols
                     x_test = df_test.loc[:, fields]
                     pred = classifier.predict_proba(x_test)
 
                 if y_test and (y_valid or test['valid'][0] < 0):
                     break
-                sg.generate_embeddings_with_prev(prev.embeddings, 128)
+                sg.generate_embeddings_with_prev(prev.embeddings, dims)
                 self.run_command(walk_command)
                 self.run_command(emb_command)
-                sg.load_embeddings(embed_file)  # update embeddings with output from w2v
+                sg.load_embeddings(embed_file, dims)  # update embeddings with output from w2v
                 sg.save_embeddings(init_file, dims)
                 distance += self.core_movement(sg.embeddings)
                 self.prev_embeds = self.store_core_embeds(sg.embeddings)
@@ -347,14 +364,14 @@ class TestMachine(object):
         if err[0]:
             print err
 
-    def line_command(self, train, output, size=128, threads=8, negative=5):
+    def line_command(self, train, output, size=128, threads=16, negative=5):
         # todo: order, rho, etc...
         command = [self.line_path, "-train", train, "-output", output, "-size", str(size), "-threads", str(threads),
                    "-negative", str(negative)]
         return command
 
     def rf_command(self, input, output, init, beta_file, alpha=.025, size=128, window=5, sample=0, negative=5,
-                   threads=8, beta=1):
+                   threads=16, beta=1):
         command = [self.rf_path, "-train", input, "-init", init, "-output", output,
                    "-size", str(size), "-window", str(window), "-sample", str(sample),
                    "-negative", str(negative), "-threads", str(threads), "-alpha", str(alpha), "-beta", str(beta),
